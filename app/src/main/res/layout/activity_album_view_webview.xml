@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_black"
+    tools:context="com.app.photobook.ActivityAlbumView_">
+
+    <RelativeLayout
+        android:id="@+id/llData"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal">
+
+        <WebView
+            android:id="@+id/webview"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:background="@color/color_trans_30"
+            android:orientation="horizontal">
+
+            <LinearLayout
+                android:id="@+id/llLeftComment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="?selectableItemBackground"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingBottom="3dp"
+                android:paddingTop="3dp"
+                android:visibility="gone">
+
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    app:srcCompat="@drawable/ic_comment_white_24dp" />
+
+                <TextView
+                    android:id="@+id/tvLeftComment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="Comment"
+                    android:textColor="@color/field_background" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/llRightComment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="?selectableItemBackground"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:paddingBottom="3dp"
+                android:paddingTop="3dp"
+                android:visibility="gone">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    app:srcCompat="@drawable/ic_comment_white_24dp" />
+
+                <TextView
+                    android:id="@+id/tvRightComment"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="5dp"
+                    android:text="Comment"
+                    android:textColor="@color/field_background" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+        <ImageView
+            android:id="@+id/ivMusic"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_alignParentRight="true"
+            android:layout_margin="10dp"
+            app:srcCompat="@drawable/ic_music_on" />
+
+
+        <ImageView
+            android:id="@+id/ivPrev"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp"
+            android:background="@drawable/selector_button_arrow"
+            android:padding="10dp"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_navigate_before_black_24dp" />
+
+        <ImageView
+            android:id="@+id/ivNext"
+            android:layout_width="42dp"
+            android:layout_height="42dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_margin="10dp"
+            android:background="@drawable/selector_button_arrow"
+            android:padding="10dp"
+            android:visibility="gone"
+            app:srcCompat="@drawable/ic_navigate_next_black_24dp" />
+
+        <LinearLayout
+            android:id="@+id/llShare"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:gravity="center"
+            android:orientation="vertical"
+            android:visibility="gone">
+
+            <ImageView
+                android:id="@+id/ivWhatsapp"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:padding="10dp"
+                app:srcCompat="@drawable/ic_whatsapp" />
+
+            <ImageView
+                android:id="@+id/ivFacebook"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:padding="10dp"
+                app:srcCompat="@drawable/ic_facebook" />
+
+            <ImageView
+                android:id="@+id/ivGoogle"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:padding="10dp"
+                app:srcCompat="@drawable/ic_google_plus" />
+
+            <ImageView
+                android:id="@+id/ivTwitter"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:padding="10dp"
+                app:srcCompat="@drawable/ic_twitter" />
+
+            <ImageView
+                android:id="@+id/ivMail"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:padding="10dp"
+                app:srcCompat="@drawable/ic_sendmail" />
+
+            <ImageView
+                android:id="@+id/ivMore"
+                android:layout_width="52dp"
+                android:layout_height="52dp"
+                android:padding="10dp"
+                app:srcCompat="@drawable/ic_more" />
+
+        </LinearLayout>
+
+        <ProgressBar
+            android:id="@+id/progress"
+            style="@style/Widget.AppCompat.ProgressBar.Horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:progress="0" />
+
+    </RelativeLayout>
+
+    <include
+        android:id="@+id/frmEmpty"
+        layout="@layout/view_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:visibility="gone" />
+
+    <include
+        android:id="@+id/dialogLayout"
+        layout="@layout/dialog_comment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:visibility="gone" />
+
+</RelativeLayout>

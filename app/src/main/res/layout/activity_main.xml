@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/color_white"
+    android:fitsSystemWindows="true"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:id="@+id/llBottom"
+        android:layout_width="match_parent"
+        android:layout_height="50dp"
+        android:layout_alignParentBottom="true"
+        android:background="@color/bottomColor"
+        android:orientation="horizontal">
+
+        <FrameLayout
+            android:id="@+id/flHome"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?selectableItemBackground">
+
+            <View
+                android:id="@+id/viewSelectedHome"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/bottomColorSelected" />
+
+            <ImageView
+                android:id="@+id/ivHome"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_gravity="center"
+                android:tint="@color/bottomTextColor"
+                app:srcCompat="@drawable/ic_home_black_24dp" />
+
+        </FrameLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/icon_gray_light" />
+
+
+        <FrameLayout
+            android:id="@+id/flPortfolio"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?selectableItemBackground">
+
+            <View
+                android:id="@+id/viewSelectedPortfolio"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/bottomColorSelected"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/ivPortfolio"
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_gravity="center"
+                android:tint="@color/bottomTextColor"
+                app:srcCompat="@drawable/ic_my_albums_24dp" />
+
+        </FrameLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/icon_gray_light" />
+
+        <FrameLayout
+            android:id="@+id/flAlbums"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?selectableItemBackground">
+
+            <View
+                android:id="@+id/viewSelectedAlbums"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/bottomColorSelected"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/ivAlbums"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_gravity="center"
+                android:tint="@color/bottomTextColor"
+                app:srcCompat="@drawable/ic_menu_album" />
+
+        </FrameLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/icon_gray_light" />
+
+        <FrameLayout
+            android:id="@+id/flCall"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?selectableItemBackground">
+
+            <View
+                android:id="@+id/viewSelectedCall"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/bottomColorSelected"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/ivCall"
+                android:layout_width="26dp"
+                android:layout_height="26dp"
+                android:layout_gravity="center"
+                android:tint="@color/bottomTextColor"
+                app:srcCompat="@drawable/ic_menu_call" />
+
+        </FrameLayout>
+
+
+        <!--<FrameLayout
+            android:id="@+id/flEmail"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?selectableItemBackground">
+
+            <View
+                android:id="@+id/viewSelectedEmail"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/bottomColorSelected"
+                android:visibility="gone" />
+
+            <ImageView
+                android:id="@+id/ivEmail"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:tint="@color/bottomTextColor"
+                app:srcCompat="@drawable/ic_email_black_24dp" />
+
+        </FrameLayout>-->
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/llContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_above="@id/llBottom" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_above="@id/llBottom"
+        android:background="@drawable/shape_shadow_bottom_light" />
+
+    <!--<com.luseen.luseenbottomnavigation.BottomNavigation.BottomNavigationView
+        android:id="@+id/bottomNavigation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:bnv_colored_background="false"
+        app:bnv_shadow="true"
+        app:bnv_with_text="false"
+        app:itemIconTint="@color/bottomTextColor"
+        app:itemTextColor="@color/bottomTextColor" />-->
+
+
+</RelativeLayout>

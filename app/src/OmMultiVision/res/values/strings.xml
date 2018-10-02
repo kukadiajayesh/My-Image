@@ -1,0 +1,14 @@
+<resources>
+
+    <!--Change App Vise-->
+    <string name="app_name">Om Multi Vision</string>
+    <drawable name="app_logo">@mipmap/ic_launcher</drawable>
+
+    <!--URL Details-->
+    <string name="base_url">http://album.alivefoto.com/api/</string>
+    <string name="photographer_id">33</string>
+    <string name="share_text">Hello Friends, View my OmMultiVision %s\n
+        Download the app from: http://album.alivefoto.com &amp; use Pin : %s</string>
+    <drawable name="drawable_splash_screen">@drawable/splash_screen_1_2</drawable>
+
+</resources>

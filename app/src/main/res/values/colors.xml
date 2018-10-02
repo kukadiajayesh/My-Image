@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">@color/app_default_color</color>
+    <color name="colorPrimaryDark">@color/app_default_color_dark</color>
+    <color name="colorAccent">@color/color_orange</color>
+    <color name="colorAccentDark">@color/color_orange_dark</color>
+
+    <color name="colorAccentLight">#fff</color>
+    <color name="color_white">#fff</color>
+    <color name="color_white_50">#7fffffff</color>
+    <color name="field_background">#eae9e9</color>
+    <color name="field_background_">#c2c2c2</color>
+
+    <color name="app_default_color">#59a7e5</color>
+    <color name="app_default_color_dark">#3d78a7</color>
+
+    <color name="color_pink">#DE2A49</color>
+    <color name="color_pink_dark">#ae2139</color>
+
+    <color name="color_gray">#333333</color>
+
+    <color name="text_color">#303030</color>
+    <color name="color_gray_light__">#dcdcdc</color>
+
+    <color name="color_orange">#D52206</color>
+    <color name="color_orange_dark">#8e2a19</color>
+    <color name="color_blue">#0996A5</color>
+
+
+    <color name="color_blue_">#07AFEE</color>
+
+    <color name="color_1">#1C8AD8</color>
+    <color name="color_2">#8AD1C6</color>
+    <color name="color_trans">#1c000000</color>
+
+    <color name="color_green">#319c00</color>
+    <color name="color_border">#566082</color>
+
+    <color name="color_brownie">#BB8350</color>
+    <color name="color_brownie_dark">#714f30</color>
+
+    <color name="icon_gray">#838383</color>
+    <color name="icon_gray_light">#ededed</color>
+    <color name="icon_gray_1">#848484</color>
+    <color name="icon_gray_1_50">#2cffffff</color>
+    <!-- A4AC9C -->
+    <color name="splash_bg">#FFF5D4</color>
+
+
+    <color name="login_field_color_hint">#dffff986</color>
+    <color name="login_field_color">#fff652</color>
+    <color name="login_title">#FB5D5C</color>
+
+    <color name="comment_hint_color">#7b7b7b</color>
+    <color name="comment_text_color">#202020</color>
+    <color name="color_black">#000000</color>
+    <color name="color_trans_30">#34000000</color>
+    <color name="color_trans_50">#83000000</color>
+    <color name="color_trans_90">#0d000000</color>
+    <color name="black_50_opacity">#7c000000</color>
+
+    <color name="app_background_color">#2d2c28</color>
+    <color name="home_screen_bg">#e4e8eb</color>
+    <color name="color_gray_70">#a8333333</color>
+    <color name="color_panel_text">#b7ffffff</color>
+
+    <color name="firstColor">#00BCD4</color>
+    <color name="secondColor">#E91E63</color>
+    <color name="thirdColor">#FF5722</color>
+    <color name="fourthColor">#4CAF50</color>
+
+    <color name="bottomColor">#f5f5f5</color>
+    <color name="bottomColorSelected">#ffffff</color>
+    <color name="bottomTopBorder">#cccccc</color>
+    <color name="bottomTextColor">#4f4f4f</color>
+    <color name="ImageBorderColor">#34a853</color>
+
+    <color name="color1">#44B3C2</color>
+    <color name="color2">#E45641</color>
+    <color name="color3">#5D4C46</color>
+    <color name="color4">#F1A94E</color>
+    <color name="app_color">#B1CB20</color>
+
+</resources>

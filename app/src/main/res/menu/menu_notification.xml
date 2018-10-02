@@ -1,0 +1,12 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_notification"
+        android:title="Notification"
+
+        app:showAsAction="always|withText" />
+
+    <!--app:actionLayout="@layout/menu_action_item_badge"-->
+
+</menu>

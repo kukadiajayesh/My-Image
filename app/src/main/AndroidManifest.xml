@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.app.photobook">
+
+    <!--<uses-permission android:name="android.permission.READ_CONTACTS"></uses-permission>-->
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CALL_PHONE" />
+
+    <!--    <permission
+            android:name="com.app.photobook.permission.C2D_MESSAGE"
+            android:protectionLevel="signature" />
+        <uses-permission android:name="com.app.brownipoints.permission.C2D_MESSAGE" />-->
+
+    <application
+        android:name=".CustomApp"
+        android:allowBackup="true"
+        android:hardwareAccelerated="true"
+        android:icon="@drawable/app_logo"
+        android:label="@string/app_name"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme.brown">
+
+        <activity
+            android:name=".SplashActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:theme="@style/SplashTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".MainActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar.Login"></activity>
+        <activity
+            android:name=".UserProfileActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar.Login"></activity>
+
+        <activity
+            android:name=".ActivityAlbumViewWebview"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme.NoActionBar.Login"></activity>
+
+        <activity
+            android:name=".ActivityCommentAlbums"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar.Login"></activity>
+
+        <activity
+            android:name=".PhotographerProfile"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar.Login"></activity>
+
+        <activity
+            android:name=".ActivityNotifications"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.brown"></activity>
+
+        <activity
+            android:name=".ui.StaggeredGalleryActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar.Login"></activity>
+
+        <activity
+            android:name=".ui.PhotoPreviewActivity"
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.NoActionBar.Login"></activity>
+
+        <activity
+            android:name=".WebViewActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme.NoActionBar.Login">
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
+
+        <activity
+            android:name=".YoutubeActivity"
+            android:screenOrientation="landscape"
+            android:theme="@style/AppTheme.NoActionBar.Login">
+            <!--<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>-->
+        </activity>
+
+        <!--Google Firebase Messageing-->
+        <!--<service android:name=".fcm.MyFirebaseInstanceIDService">
+            <intent-filter>
+                <action android:name="com.google.firebase.INSTANCE_ID_EVENT" />
+            </intent-filter>
+        </service>
+        <service android:name=".fcm.FirebaseReceiveService">
+            <intent-filter>
+                <action android:name="com.google.firebase.MESSAGING_EVENT" />
+            </intent-filter>
+        </service>-->
+
+        <!--Facebook-->
+        <!--  <activity
+              android:name="com.facebook.FacebookActivity"
+              android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+              android:label="@string/app_name" />
+          <meta-data
+              android:name="com.facebook.sdk.ApplicationId"
+              android:value="@string/fb_app_id" />-->
+
+
+    </application>
+
+</manifest>

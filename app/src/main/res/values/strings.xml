@@ -1,0 +1,131 @@
+<resources>
+
+    <!--Change App Vise-->
+    <string name="app_name">Alivefoto</string>
+    <drawable name="app_logo">@mipmap/ic_launcher</drawable>
+
+    <!--<string name="app_name">IGotMyWork</string>
+    <drawable name="app_logo">@mipmap/ic_launcher_2</drawable>-->
+
+
+    <!--URL Details-->
+    <string name="base_url">http://album.alivefoto.com/api/</string>
+    <string name="photographer_id">25</string>
+    <string name="share_text">Hello Friends, View my Alivefoto %s\n
+        Download the app from: http://album.alivefoto.com &amp; use Pin : %s</string>
+    <drawable name="drawable_splash_screen">@drawable/splash_screen_1_1</drawable>
+
+    <!--<string name="base_url">http://design.alivefoto.com/ap-api/</string>
+    <string name="url_username">appuser</string>
+    <string name="url_password">Appuser@Design</string>
+    <string name="share_url">http://album.glimpsephotobook.com</string>
+
+    <string name="share_text">Hello Friends, View my Photobook %s\n
+        Download the app from: http://album.glimpsephotobook.com &amp; use Pin : %s</string>-->
+    <!--//===24b601===//-->
+
+    <string name="title_dashboard">Dashboard</string>
+    <drawable name="drawable_data_no">@drawable/ic_svg_coffee</drawable>
+
+    <string name="message_album_exist">Album is already added !</string>
+    <string name="message_empty_album">Use + options to add new album</string>
+
+    <string name="message_empty">There is nothing to show you here</string>
+    <string name="message_empty_comment">No Comment found</string>
+    <string name="message_empty_activity">Use + Option to add new Activity</string>
+    <string name="message_empty_activity_">No Activity</string>
+    <string name="message_empty_reward_">No Reward</string>
+    <string name="message_empty_user">There are no Brownie Users</string>
+    <string name="message_empty_notifications">It seems you don\'t have any notifications</string>
+    <string name="message_no_internet">Internet is not connected</string>
+    <string name="message_no_limit_reached">Sorry!\nYou have reached to maximum selection limit. Please contact your photographer to upgrade the selection limit at #mobile_no</string>
+
+    <string name="menu_title_home">Home</string>
+    <string name="menu_title_album">Album</string>
+    <string name="menu_title_call">Call</string>
+    <string name="menu_title_email">Email</string>
+
+    <string name="title_activities">Brownie Activities</string>
+    <string name="title_rewards">Brownie Rewards</string>
+    <string name="title_review_activity">Review Activities</string>
+    <string name="title_review_reward">Review Rewards</string>
+    <string name="title_profile">Profile</string>
+    <string name="title_password">Change Password</string>
+    <string name="title_logout">Logout</string>
+    <string name="title_continue">Continue</string>
+    <string name="name">Name</string>
+    <string name="mobile">Mobile</string>
+    <string name="email">Email</string>
+    <string name="about">About</string>
+    <string name="address">Address</string>
+    <string name="password">Password</string>
+    <string name="theme">Select Theme</string>
+    <string name="password_confirm">Confirm Password</string>
+    <string name="navigation_drawer_close">drawer close</string>
+    <string name="navigation_drawer_open">drawer open</string>
+    <string name="old_password">Old Password</string>
+    <string name="new_password">New Password</string>
+
+    <string name="hint_name">Name</string>
+    <string name="hint_mobile">Mobile</string>
+    <string name="hint_email">email</string>
+    <string name="hint_pin">Pin Code</string>
+    <string name="text_clear">Clear</string>
+    <string name="text_cancel">Cancel</string>
+    <string name="text_done">Done</string>
+
+    <string name="title_autoplay">Auto Play</string>
+    <string name="title_comment">Comments</string>
+    <string name="title_share">Share</string>
+    <string name="title_refresh">Refresh</string>
+
+    <string-array name="theme_array">
+        <item>Brown</item>
+        <item>Red</item>
+        <item>Pink</item>
+        <item>Purple</item>
+        <item>Deep Purple</item>
+        <item>Indigo</item>
+        <item>Blue</item>
+        <item>Light Blue</item>
+        <item>Cyan</item>
+        <item>Green</item>
+        <item>Lime</item>
+        <item>Amber</item>
+        <item>Deep Orange</item>
+        <item>Teal</item>
+    </string-array>
+
+    <string-array name="theme_array_ids">
+        <item>0</item>
+        <item>1</item>
+        <item>2</item>
+        <item>3</item>
+        <item>4</item>
+        <item>5</item>
+        <item>6</item>
+        <item>7</item>
+        <item>8</item>
+        <item>9</item>
+        <item>10</item>
+        <item>11</item>
+        <item>12</item>
+        <item>13</item>
+    </string-array>
+
+    <item name="background_sound_vol" format="float" type="dimen">0.5</item>
+
+    <style name="photographer_icon">
+        <item name="android:layout_width">16dp</item>
+        <item name="android:layout_height">16dp</item>
+        <item name="android:tint">@color/bottomTextColor</item>
+    </style>
+
+    <style name="photographer_icon_linear">
+        <item name="android:paddingLeft">40dp</item>
+        <item name="android:paddingRight">40dp</item>
+        <item name="android:paddingTop">15dp</item>
+        <item name="android:paddingBottom">15dp</item>
+        <item name="android:background">?selectableItemBackground</item>
+    </style>
+</resources>

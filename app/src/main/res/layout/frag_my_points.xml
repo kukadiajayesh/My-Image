@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/container"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.app.photobook.MainActivity">
+
+    <LinearLayout
+        android:id="@+id/llProgress"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:layout_width="32dp"
+            android:layout_height="32dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Please Wait" />
+    </LinearLayout>
+
+    <include
+        android:id="@+id/frmEmpty"
+        layout="@layout/view_empty"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        android:visibility="gone"></include>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
+        tools:listitem="@layout/list_item_user_activity_dashboard"></android.support.v7.widget.RecyclerView>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="?colorAccent"
+        android:orientation="horizontal"
+        android:padding="7dp">
+
+        <TextView
+            android:id="@+id/tvMyPointsTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_weight="1"
+            android:text="Total Brownie Points"
+            android:textColor="#fff"
+            android:textSize="@dimen/textsize_4" />
+
+        <TextView
+            android:id="@+id/tvMyPoints"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:layout_marginRight="30dp"
+            android:layout_marginTop="5dp"
+            android:text="0"
+            android:textColor="#fff"
+            android:textSize="@dimen/textsize_4" />
+
+    </LinearLayout>
+
+</LinearLayout>

@@ -1,0 +1,257 @@
+<resources>
+
+    <!--<style name="Custom_Dialog" parent="ThemeOverlay.AppCompat.Light" >
+        <item name="windowMinWidthMajor">60%</item>
+        <item name="windowMinWidthMinor">65%</item>
+    </style>-->
+
+    <style name="AppTheme.Login" parent="Theme.AppCompat">
+        <!--<item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>-->
+        <item name="colorPrimary">@color/md_brown_500</item>
+        <item name="colorPrimaryDark">@color/md_brown_700</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.Login.Dark" parent="Theme.AppCompat">
+        <!--<item name="android:statusBarColor">@android:color/transparent</item>-->
+        <item name="colorPrimary">@color/md_brown_500</item>
+        <item name="colorPrimaryDark">@color/md_brown_700</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="AppTheme.NoActionBar.Login" parent="Theme.AppCompat">
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/colorAccent</item>
+        <item name="windowActionBar">false</item>
+        <item name="windowNoTitle">true</item>
+    </style>
+
+    <style name="SplashTheme" parent="AppTheme.NoActionBar.Login">
+        <item name="android:windowBackground">@color/color_white</item>
+    </style>
+
+
+    <!-- brown theme. -->
+    <style name="AppTheme.brown" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/md_brown_500</item>
+        <item name="colorPrimaryDark">@color/md_brown_700</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.brown.NoActionbar" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/md_brown_500</item>
+        <item name="colorPrimaryDark">@color/md_brown_700</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+    <!-- red theme. -->
+    <style name="AppTheme.red" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/md_red_500</item>
+        <item name="colorPrimaryDark">@color/md_red_700</item>
+        <item name="colorAccent">@color/md_teal_500</item>
+    </style>
+
+    <style name="AppTheme.red.NoActionbar" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/md_red_500</item>
+        <item name="colorPrimaryDark">@color/md_red_700</item>
+        <item name="colorAccent">@color/md_teal_500</item>
+    </style>
+
+    <!-- pink theme. -->
+    <style name="AppTheme.pink" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/md_pink_500</item>
+        <item name="colorPrimaryDark">@color/md_pink_700</item>
+        <item name="colorAccent">@color/md_teal_500</item>
+    </style>
+
+    <style name="AppTheme.pink.NoActionbar" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/md_pink_500</item>
+        <item name="colorPrimaryDark">@color/md_pink_700</item>
+        <item name="colorAccent">@color/md_teal_500</item>
+    </style>
+
+    <!-- purple theme. -->
+    <style name="AppTheme.purple" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/md_purple_500</item>
+        <item name="colorPrimaryDark">@color/md_purple_700</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.purple.NoActionbar" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/md_purple_500</item>
+        <item name="colorPrimaryDark">@color/md_purple_700</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!-- deep_purple theme. -->
+    <style name="AppTheme.deep_purple" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/md_deep_purple_500</item>
+        <item name="colorPrimaryDark">@color/md_deep_purple_700</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.deep_purple.NoActionbar" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/md_deep_purple_500</item>
+        <item name="colorPrimaryDark">@color/md_deep_purple_700</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <!-- indigo theme. -->
+    <style name="AppTheme.indigo" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/md_indigo_500</item>
+        <item name="colorPrimaryDark">@color/md_indigo_700</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.indigo.NoActionbar" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/md_indigo_500</item>
+        <item name="colorPrimaryDark">@color/md_indigo_700</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+    <!-- purple theme. -->
+    <style name="AppTheme.blue" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/md_blue_500</item>
+        <item name="colorPrimaryDark">@color/md_blue_700</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.blue.NoActionbar" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/md_blue_500</item>
+        <item name="colorPrimaryDark">@color/md_blue_700</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+    <!-- light_blue theme. -->
+    <style name="AppTheme.light_blue" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/md_light_blue_500</item>
+        <item name="colorPrimaryDark">@color/md_light_blue_700</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.light_blue.NoActionbar" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/md_light_blue_500</item>
+        <item name="colorPrimaryDark">@color/md_light_blue_700</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+    <!-- cyan theme. -->
+    <style name="AppTheme.cyan" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/md_cyan_500</item>
+        <item name="colorPrimaryDark">@color/md_cyan_700</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.cyan.NoActionbar" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/md_cyan_500</item>
+        <item name="colorPrimaryDark">@color/md_cyan_700</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+    <!-- green theme. -->
+    <style name="AppTheme.green" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/md_green_500</item>
+        <item name="colorPrimaryDark">@color/md_green_700</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.green.NoActionbar" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/md_green_500</item>
+        <item name="colorPrimaryDark">@color/md_green_700</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+    <!-- lime theme. -->
+    <style name="AppTheme.lime" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/md_lime_500</item>
+        <item name="colorPrimaryDark">@color/md_lime_700</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.lime.NoActionbar" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/md_lime_500</item>
+        <item name="colorPrimaryDark">@color/md_lime_700</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+    <!-- amber theme. -->
+    <style name="AppTheme.amber" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/md_amber_500</item>
+        <item name="colorPrimaryDark">@color/md_amber_700</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.amber.NoActionbar" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/md_amber_500</item>
+        <item name="colorPrimaryDark">@color/md_amber_700</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+
+    <!-- deep_orange theme. -->
+    <style name="AppTheme.deep_orange" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/md_deep_orange_500</item>
+        <item name="colorPrimaryDark">@color/md_deep_orange_700</item>
+        <item name="colorAccent">@color/md_teal_500</item>
+    </style>
+
+    <style name="AppTheme.deep_orange.NoActionbar" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/md_deep_orange_500</item>
+        <item name="colorPrimaryDark">@color/md_deep_orange_700</item>
+        <item name="colorAccent">@color/md_teal_500</item>
+    </style>
+
+
+    <!-- teal theme. -->
+    <style name="AppTheme.teal" parent="Theme.AppCompat.Light.DarkActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/md_teal_500</item>
+        <item name="colorPrimaryDark">@color/md_teal_700</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+    <style name="AppTheme.teal.NoActionbar" parent="Theme.AppCompat.Light.NoActionBar">
+        <!-- Customize your theme here. -->
+        <item name="colorPrimary">@color/md_teal_500</item>
+        <item name="colorPrimaryDark">@color/md_teal_700</item>
+        <item name="colorAccent">@color/colorAccent</item>
+    </style>
+
+</resources>

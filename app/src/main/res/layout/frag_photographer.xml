@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/shape_background_blur"
+    android:fitsSystemWindows="true"
+    android:theme="@style/AppTheme.brown.NoActionbar">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_gravity="center"
+        android:layout_margin="20dp"
+        android:background="@color/color_white"
+        app:cardUseCompatPadding="true">
+
+        <android.support.v4.widget.NestedScrollView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:orientation="vertical">
+
+                <ImageView
+                    android:id="@+id/ivLogo"
+                    android:layout_width="64dp"
+                    android:layout_height="64dp"
+                    android:layout_marginTop="40dp"
+                    android:src="@drawable/shape_image_thumb" />
+
+                <TextView
+                    android:id="@+id/tvName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="15dp"
+                    android:text="Name"
+                    android:textColor="@color/bottomTextColor"
+                    android:textSize="@dimen/textsize_2"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="40dp"
+                    android:background="@color/icon_gray_light" />
+
+                <TextView
+                    android:id="@+id/tvDesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:layout_marginTop="20dp"
+                    android:gravity="center"
+                    android:text="Name"
+                    android:textColor="@color/bottomTextColor"
+                    android:textSize="@dimen/textsize_1"
+                    android:textStyle="bold" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="20dp"
+                    android:background="@color/icon_gray_light" />
+
+                <LinearLayout
+                    android:id="@+id/llEmail"
+                    style="@style/photographer_icon_linear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        style="@style/photographer_icon"
+                        app:srcCompat="@drawable/ic_email_black_24dp" />
+
+                    <TextView
+                        android:id="@+id/tvEmail"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginStart="30dp"
+                        android:textColor="@color/bottomTextColor"
+                        android:textSize="@dimen/textsize_1" />
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/viewEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/icon_gray_light" />
+
+                <LinearLayout
+                    android:id="@+id/llGoogle"
+                    style="@style/photographer_icon_linear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        style="@style/photographer_icon"
+                        app:srcCompat="@drawable/ic_google_plus_menu" />
+
+                    <TextView
+                        android:id="@+id/tvSocialGoogle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginStart="30dp"
+                        android:textColor="@color/bottomTextColor"
+                        android:textSize="@dimen/textsize_1" />
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/viewGoogle"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/icon_gray_light" />
+
+                <LinearLayout
+                    android:id="@+id/llFacebook"
+                    style="@style/photographer_icon_linear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        style="@style/photographer_icon"
+                        app:srcCompat="@drawable/ic_facebook_menu" />
+
+                    <TextView
+                        android:id="@+id/tvSocialFacebook"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginStart="30dp"
+                        android:textColor="@color/bottomTextColor"
+                        android:textSize="@dimen/textsize_1" />
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/viewFacebook"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/icon_gray_light" />
+
+                <LinearLayout
+                    android:id="@+id/llInstagram"
+                    style="@style/photographer_icon_linear"
+                    android:layout_width="match_parent"
+
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        style="@style/photographer_icon"
+                        app:srcCompat="@drawable/ic_instagram" />
+
+                    <TextView
+                        android:id="@+id/tvSocialInstagram"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginStart="30dp"
+                        android:textColor="@color/bottomTextColor"
+                        android:textSize="@dimen/textsize_1" />
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/viewInstagram"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/icon_gray_light" />
+
+                <LinearLayout
+                    android:id="@+id/llTwitter"
+                    style="@style/photographer_icon_linear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        style="@style/photographer_icon"
+                        app:srcCompat="@drawable/ic_twitter_menu" />
+
+                    <TextView
+                        android:id="@+id/tvSocialTwitter"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginStart="30dp"
+                        android:textColor="@color/bottomTextColor"
+                        android:textSize="@dimen/textsize_1" />
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/viewTwitter"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/icon_gray_light" />
+
+                <LinearLayout
+                    android:id="@+id/llPintrest"
+                    style="@style/photographer_icon_linear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+
+                        style="@style/photographer_icon"
+                        app:srcCompat="@drawable/ic_pinterest" />
+
+                    <TextView
+                        android:id="@+id/tvSocialPintreset"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="30dp"
+                        android:layout_marginStart="30dp"
+                        android:textColor="@color/bottomTextColor"
+                        android:textSize="@dimen/textsize_1" />
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/viewPintreset"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/icon_gray_light" />
+
+            </LinearLayout>
+        </android.support.v4.widget.NestedScrollView>
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

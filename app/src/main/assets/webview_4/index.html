@@ -1,0 +1,359 @@
+<!DOCTYPE html>
+<html lang="en-US" class="no-js">
+<head>
+    <meta charset="UTF-8">
+    <meta name=viewport content="width=device-width,initial-scale=1,user-scalable=no">
+
+    <link rel='stylesheet' id='ap-bootstrap-css' href='css/bootstrap.min.css' type='text/css' media='all'/>
+    <link rel='stylesheet' id='ap-style-css' href='css/ap-styles.css' type='text/css' media='all'/>
+    <script type='text/javascript' src='js/jquery.js'></script>
+    <script type='text/javascript' src='js/jquery-migrate.min.js'></script>
+    <script type='text/javascript' src='js/tether.min.js'></script>
+    <script type='text/javascript' src='js/bootstrap.min.js'></script>
+    <script type='text/javascript' src='js/modernizr.min.js'></script>
+    <script type='text/javascript' src='js/hash.js'></script>
+    <script type='text/javascript' src='js/sonic.js'></script>
+    <script type='text/javascript' src='js/PreloaderPercentage.js'></script>
+</head>
+<body>
+<div class="ap-flipbook">
+    <div id="ap_preloading">
+        <div class="container head-main">
+            <div class="ap_loader_center">
+                <div class="ap_loader_main" id="ap_pre_loader"><a class="ap_loader_percentage"
+                                                                  href="#">20%</a></div>
+            </div>
+        </div>
+    </div>
+    <div class="ap_photobook_content">
+        <div class="magazine-viewport">
+            <div class="wrapper">
+                <div class="container">
+                    <div class="ap-book magazine animated">
+                        <div class="left-depth" ignore="1"></div>
+                        <div class="right-depth" ignore="1"></div>
+                    </div>
+                </div>
+            </div>
+            <div style="display: none;" class="autoplayapp_icon"><img src="images/play_icon.jpg"/>
+            </div>
+        </div>
+    </div>
+
+    <script type="text/javascript">
+function getParameterByName(name, url) {
+if (!url) url = window.location.href;
+alert(url);
+name = name.replace(/[\[\]]/g, "\\$&");
+var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+results = regex.exec(url);
+if (!results) return null;
+if (!results[2]) return '';
+
+return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
+                var AP_ImageUrl = getParameterByName('path',''),
+                        AP_PhotoBookID = '1',
+                        AP_BookWidth = getParameterByName('width',''),
+                        AP_BookHeight = getParameterByName('height',''),
+                        Ap_Direction = 'ltr',
+                        AP_TotalPages = getParameterByName('total',''),
+                        AP_SecondLast = parseInt(AP_TotalPages) - 1, AddExtra = true, IsMobile = false, ThumbsStatus = 0,
+                        Ap_Display = '1',
+                        Ap_EnableComm = 'yes',
+                        autoplay,
+                        ThumbsStatus = 0,
+                        IsMobile = false,
+                        Apdelayed = false,
+                        PhotobookBookLoded = false,
+                        APAppAutoplay = getParameterByName('auto_play','');
+                
+
+                var ap_preloader = new Sonic({
+                    width: 100,
+                    height: 100,
+                    stepsPerFrame: 1,
+                    trailLength: 1,
+                    pointDistance: .025,
+                    strokeColor: '#05E2FF',
+                    fps: 30,
+                    setup: function () {
+                        this._.lineWidth = 2;
+                    },
+                    step: function (point, index) {
+
+                        var cx = this.padding + 50,
+                                cy = this.padding + 50,
+                                _ = this._,
+                                angle = (Math.PI / 180) * (point.progress * 360);
+
+                        this._.globalAlpha = Math.max(.5, this.alpha);
+
+                        _.beginPath();
+                        _.moveTo(point.x, point.y);
+                        _.lineTo(
+                                (Math.cos(angle) * 35) + cx,
+                                (Math.sin(angle) * 35) + cy
+                                );
+                        _.closePath();
+                        _.stroke();
+
+                        _.beginPath();
+                        _.moveTo(
+                                (Math.cos(-angle) * 32) + cx,
+                                (Math.sin(-angle) * 32) + cy
+                                );
+                        _.lineTo(
+                                (Math.cos(-angle) * 27) + cx,
+                                (Math.sin(-angle) * 27) + cy
+                                );
+                        _.closePath();
+                        _.stroke();
+
+                    },
+                    path: [
+                        ['arc', 50, 50, 40, 0, 360]
+                    ]
+
+                });
+
+                ap_preloader.play();
+                jQuery("#ap_pre_loader").prepend(ap_preloader.canvas);
+
+                function ap_turnTo(page) {
+                    jQuery('.magazine').turn('page', page);
+                }
+                function ap_loadApp() {
+
+                    jQuery('.magazine').turn({
+                        width: AP_BookWidth,
+                        height: AP_BookHeight,
+                        //display:Ap_Display,
+                        elevation: 50,
+                        acceleration: true,
+                        gradients: true,
+                        duration: 1500,
+                        direction: Ap_Direction,
+                        autoCenter: true,
+                        pages: AP_TotalPages,
+                        when: {
+                            turning: function (event, page, view) {
+                                var book = jQuery(this),
+                                currentPage = book.turn('page'),
+                                pages = book.turn('pages');
+                                ap_pagenumber(page);
+                                disableControls(page);
+                                if(page ==1 || page == AP_TotalPages)
+                                    var onscpage = page;
+                                else {
+                                    if((page%2) == 0)
+                                        var onscpage = page;
+                                    else
+                                        var onscpage = page-1;
+                                }
+                                app.callFromJS(onscpage);
+                                //app.makeToast(onscpage);
+                                updateDepth(book, page, AP_TotalPages);
+                            },
+                            turned: function (event, page, view) {
+                                disableControls(page);
+                                var book = jQuery(this);
+                                updateDepth(book, page, AP_TotalPages);
+                                if ((page == 2 || page == 3))
+                                    jQuery(this).turn('peel', 'br');
+
+                                jQuery(this).turn('center');
+                            },
+                            end: function (e, page) {
+                                var book = jQuery(this);
+                                //ap_pagenumber(page);
+                                //updateDepth(book, page, AP_TotalPages);
+                            },
+                            missing: function (event, pages) {
+                                for (var i = 0; i < pages.length; i++)
+                                    addPage(pages[i], jQuery(this));
+                                //ap_pagenumber(pages[i]);
+                            }
+                        }
+                    });
+
+                    jQuery('.magazine-viewport').zoom({
+                        flipbook: jQuery('.magazine'),
+                        max: function () {
+                            return largeMagazineWidth() / jQuery('.magazine').width();
+                        },
+                        when: {
+                            tap: function (event) {
+                                if (jQuery(this).zoom('value') == 1) {
+                                }
+                                else
+                                    jQuery(this).zoom('zoomOut');
+                            },
+                            resize: function (event, scale, page, pageElement) {
+                                if (scale == 1)
+                                    loadSmallPage(page, pageElement);
+                                else
+                                    loadLargePage(page, pageElement);
+                            },
+                            zoomIn: function () {
+                                jQuery('.thumbnails').hide();
+                                jQuery('.made').hide();
+                                if (!window.escTip && !jQuery.isTouch) {
+                                    escTip = true;
+                                    jQuery('<div />', {'class': 'esc'}).html('<div>Press ESC to exit</div>').appendTo(jQuery('body')).delay(2000).animate({opacity: 0}, 500, function () {
+                                        jQuery(this).remove();
+                                    });
+                                }
+                            },
+                            zoomOut: function () {
+                                jQuery('.exit-message').hide();
+                                jQuery('.thumbnails').fadeIn();
+                                jQuery('.made').fadeIn();
+                                jQuery('.zoom-icon').removeClass('zoom-icon-out').addClass('zoom-icon-in');
+                                setTimeout(function () {
+                                    jQuery('.magazine').addClass('animated').removeClass('zoom-in');
+                                    resizeViewport();
+                                }, 0);
+                            },
+                            swipeLeft: function () {
+                                jQuery('.magazine').turn('next');
+                            },
+                            swipeRight: function () {
+                                jQuery('.magazine').turn('previous');
+                            }
+                        }
+                    });
+
+                    jQuery(document).keydown(function (e) {
+                        var previous = 37, next = 39, esc = 27;
+                        switch (e.keyCode) {
+                            case previous:
+                                jQuery('.magazine').turn('previous');
+                                e.preventDefault();
+                                break;
+                            case next:
+                                jQuery('.magazine').turn('next');
+                                e.preventDefault();
+                                break;
+                            case esc:
+                                jQuery('.magazine-viewport').zoom('zoomOut');
+                                e.preventDefault();
+                                break;
+                        }
+                    });
+
+                    Hash.on('^page\/([0-9]*)$', {
+                        yep: function (path, parts) {
+                            var page = parts[1];
+                            if (page !== undefined) {
+                                if (jQuery('.magazine').turn('is'))
+                                    jQuery('.magazine').turn('page', page);
+                            }
+                        },
+                        nop: function (path) {
+                            if (jQuery('.magazine').turn('is'))
+                                jQuery('.magazine').turn('page', 1);
+                        }
+                    });
+
+                    jQuery(window).resize(function () {
+                        resizeViewport();
+                    }).bind('orientationchange', function () {
+                        resizeViewport();
+                    });
+
+                    //        jQuery(document).on("click", '.ap-book .page-wrapper .even', function (event) {
+                    //		jQuery('.magazine').turn('previous');
+                    //	});
+                    //        jQuery(document).on("click", '.ap-book .page-wrapper .odd', function (event) {
+                    //		jQuery('.magazine').turn('next');
+                    //	});
+
+                    resizeViewport();
+                    jQuery('.magazine').addClass('animated');
+                   
+                }
+
+                jQuery(document).ready(function ($) {
+                    
+                    if(APAppAutoplay == 1) {
+                        $("meta[name='viewport']").attr("content", 'width=device-width,initial-scale=1,user-scalable=no');
+                    }else {
+                        $("meta[name='viewport']").attr("content", 'width=device-width,initial-scale=1,user-scalable=yes');
+                    }   
+                    
+                    yepnope({
+                        test: Modernizr.csstransforms,
+                        yep: ['js/turn.min.js'],
+                        nope: ['js/turn.html4.min.js'],
+                        both: ['js/zoom.min.js', 'js/ap-photobook.js', 'css/magazine.css', 'css/ap-flipbook.css'],
+                        complete: ap_loadApp
+                    });
+
+                    $(".ap-autoplay").click(function () {
+
+                        if ($(this).hasClass("ap-play")) {
+                            clearInterval(autoplay);
+                            $(this).find('i').removeClass('fa-pause');
+                            $(this).find('i').addClass('fa-play');
+                            $(this).removeClass('ap-play');
+                        } else {
+                            autoplay = setInterval(function () {
+                                var flipbookAP = $('.magazine');
+                                if (flipbookAP.turn('page') == flipbookAP.turn('pages'))
+                                    flipbookAP.turn('page', 1);
+                                else
+                                    flipbookAP.turn('next');
+                            }, 5000);
+                            $(this).find('i').removeClass('fa-play');
+                            $(this).find('i').addClass('fa-pause');
+                            $(this).addClass('ap-play');
+                        }
+                    });
+
+                    $('.ap-previous').click(function () {
+                        $('.magazine').turn('previous');
+                    });
+                    
+                    $('.autoplayapp_icon').click(function () {
+                        ap_autoplay();
+                        $('.autoplayapp_icon').fadeOut();
+                    });
+
+                    $('.ap-next').click(function () {
+                        $('.magazine').turn('next');
+                    });
+                    
+                });
+                function ap_next() {
+                    jQuery('.magazine').turn('next');
+                }
+                function ap_previous() {
+                    jQuery('.magazine').turn('previous');
+                }
+                function ap_autoplay() {
+                    
+                    autoplay = setInterval(function () {
+                        var flipbookAP = jQuery('.magazine');
+                        if (flipbookAP.turn('page') == flipbookAP.turn('pages')) {
+                            flipbookAP.turn('page', 1);
+                            clearInterval(autoplay);
+                            jQuery('.autoplayapp_icon').fadeIn(100); 
+                        }    
+                        else
+                            flipbookAP.turn('next');
+                    }, 5000);
+                }
+                
+
+    </script>
+
+
+</div>
+
+</body>
+</html>
+
+
+

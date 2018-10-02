@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/llItem"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="?selectableItemBackground"
+    android:padding="10dp">
+
+    <com.mikhaellopez.circularimageview.CircularImageView
+        android:id="@+id/ivUserProfile"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginLeft="10dp"
+        android:scaleType="centerCrop"
+        app:civ_border="true"
+        app:civ_border_color="@color/color_border"
+        app:civ_border_width="1dp"
+        app:civ_shadow="false" />
+
+    <android.support.v7.widget.AppCompatRadioButton
+        android:id="@+id/rbSelect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="10dp"
+        android:clickable="false"
+        android:focusable="false" />
+
+    <!--<android.support.v7.widget.AppCompatCheckBox
+        andractivity_idd:idactivity_id@+id/chkSelect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:layout_marginLeft="5dp"
+        android:layout_marginRight="10dp"
+        android:clickable="false"
+        android:focusable="false" />-->
+
+    <TextView
+        android:id="@+id/tvName"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="3dp"
+        android:layout_toLeftOf="@id/rbSelect"
+        android:layout_toRightOf="@id/ivUserProfile"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="Jayesh Kukadia"
+        android:textColor="@color/color_gray"
+        android:textSize="@dimen/textsize_3" />
+
+    <TextView
+        android:id="@+id/tvEmail"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/tvName"
+        android:layout_marginLeft="15dp"
+        android:layout_marginTop="3dp"
+        android:layout_toLeftOf="@id/rbSelect"
+        android:layout_toRightOf="@id/ivUserProfile"
+        android:ellipsize="end"
+        android:maxLines="1"
+        android:text="Jayes1234"
+        android:textSize="@dimen/textsize_2" />
+
+
+</RelativeLayout>

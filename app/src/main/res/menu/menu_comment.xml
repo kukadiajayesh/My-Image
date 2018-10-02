@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_select"
+        android:icon="@drawable/ic_check_box_empty"
+        android:title="Select"
+        app:showAsAction="always|withText" />
+
+    <item
+        android:id="@+id/action_comment"
+        android:icon="@drawable/ic_comment_white_24dp"
+        android:title="Comment"
+        app:showAsAction="always|withText" />
+
+    <item
+        android:id="@+id/action_share"
+        android:icon="@drawable/ic_share_white_24dp"
+        android:title="Share"
+        app:showAsAction="always|withText" />
+
+</menu>

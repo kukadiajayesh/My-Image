@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/action_home"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="@string/title_dashboard" />
+
+        <item
+            android:id="@+id/action_activity"
+            android:icon="@drawable/ic_dashboard_black_24dp"
+            android:title="@string/title_activities" />
+
+        <item
+            android:id="@+id/action_reward"
+            android:icon="@drawable/ic_svg_reward"
+            android:title="@string/title_rewards" />
+
+        <group android:checkableBehavior="single">
+            <item
+                android:id="@+id/action_review_activity"
+                android:icon="@drawable/ic_svg_review"
+                android:title="@string/title_review_activity" />
+            <item
+                android:id="@+id/action_review_reward"
+                android:icon="@drawable/ic_svg_review"
+                android:title="@string/title_review_reward" />
+
+            <item
+                android:id="@+id/action_profile"
+                android:icon="@drawable/ic_person_black_24dp"
+                android:title="@string/title_profile" />
+
+            <item
+                android:id="@+id/action_change_pasword"
+                android:icon="@drawable/ic_lock_black_24dp"
+                android:title="@string/title_password" />
+
+            <item
+                android:id="@+id/action_logout"
+                android:icon="@drawable/ic_svg_logout"
+                android:title="@string/title_logout" />
+        </group>
+    </group>
+</menu>

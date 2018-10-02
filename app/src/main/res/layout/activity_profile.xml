@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v4.widget.NestedScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@color/app_background_color"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+
+        <include layout="@layout/navigation_toolbar"></include>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="20dp"
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
+            android:layout_marginTop="20dp"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/field_left_margin"
+                android:text="@string/name"
+                android:textSize="@dimen/textsize_1" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_field"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/shape_frag_entry_field_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    app:srcCompat="@drawable/ic_person_white_24dp" />
+
+                <EditText
+                    android:id="@+id/edtPersonName"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:background="@android:color/transparent"
+                    android:inputType="textPersonName"
+                    android:lines="1" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/field_left_margin"
+                android:layout_marginTop="20dp"
+                android:text="@string/mobile"
+                android:textSize="@dimen/textsize_1" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_field"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/shape_frag_entry_field_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    app:srcCompat="@drawable/ic_phone_android_white_24dp" />
+
+                <EditText
+                    android:id="@+id/edtMobile"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:background="@android:color/transparent"
+                    android:inputType="phone"
+                    android:maxLength="15" />
+
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/field_left_margin"
+                android:layout_marginTop="20dp"
+                android:text="@string/email"
+                android:textSize="@dimen/textsize_1" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/height_field"
+                android:layout_marginTop="3dp"
+                android:background="@drawable/shape_frag_entry_field_bg"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:paddingBottom="10dp"
+                android:paddingLeft="10dp"
+                android:paddingRight="10dp"
+                android:paddingTop="10dp">
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    app:srcCompat="@drawable/ic_email_white_24dp" />
+
+                <EditText
+                    android:id="@+id/edtEmail"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dp"
+                    android:background="@android:color/transparent"
+                    android:inputType="textEmailAddress"
+                    android:maxLength="50" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:id="@+id/btnSubmit"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="30dp"
+                android:background="@drawable/selector_submit_button_accent"
+                android:gravity="center"
+                android:minWidth="@dimen/width_button"
+                android:orientation="horizontal"
+                android:paddingBottom="7dp"
+                android:paddingLeft="20dp"
+                android:paddingRight="20dp"
+                android:paddingTop="7dp"
+                android:visibility="visible">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="7dp"
+                    android:text="Submit"
+                    android:textColor="#fff"
+                    android:textSize="@dimen/textsize_2" />
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    app:srcCompat="@drawable/ic_check_white_24dp" />
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+    </LinearLayout>
+</android.support.v4.widget.NestedScrollView>
