@@ -143,7 +143,7 @@ public class ActivityAlbumViewWebview extends BaseActivity {
     }
 
     private void initMediaPlayer() {
-        mediaPlayer = MediaPlayer.create(this, R.raw.inspiring_piano_documentary_1);
+        mediaPlayer = MediaPlayer.create(this, R.raw.christmas_coming);
         mediaPlayer.setLooping(true);
         TypedValue typedValue = new TypedValue();
         getResources().getValue(R.dimen.background_sound_vol, typedValue, true);
