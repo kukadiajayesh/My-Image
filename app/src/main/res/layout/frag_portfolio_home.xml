@@ -6,10 +6,13 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
+    <include layout="@layout/navigation_toolbar" />
+
     <android.support.design.widget.TabLayout
         android:id="@+id/tabs"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="35dp"
+        android:layout_below="@id/toolbar"
         android:background="@color/colorPrimary"
         app:tabIndicatorColor="@color/white" />
 
@@ -32,6 +35,13 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/tabs" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="5dp"
+        android:layout_below="@id/tabs"
+        android:background="@drawable/shape_shadow_bottom"
+        android:rotation="180" />
 
     <RelativeLayout
         android:id="@+id/llProgress"
@@ -57,14 +67,5 @@
                 android:text="Please Wait..." />
 
         </LinearLayout>
-
     </RelativeLayout>
-
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="5dp"
-        android:layout_below="@id/tabs"
-        android:background="@drawable/shape_shadow_bottom"
-        android:rotation="180" />
-
 </RelativeLayout>

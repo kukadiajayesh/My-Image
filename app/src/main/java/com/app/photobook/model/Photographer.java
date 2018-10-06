@@ -78,6 +78,16 @@ public class Photographer implements Parcelable {
     @SerializedName("pinterest_link")
     @Expose
     public String pinterestLink;
+    @SerializedName("portfolio_label")
+    @Expose
+    public String portfolioLabel;
+    @SerializedName("private_gallery_label")
+    @Expose
+    public String privateGalleryLabel;
+    @SerializedName("google_map_direction")
+    @Expose
+    public String googleMapDirection;
+
 
     public Photographer() {
 
@@ -105,6 +115,9 @@ public class Photographer implements Parcelable {
         instagramLink = in.readString();
         linkedinLink = in.readString();
         pinterestLink = in.readString();
+        portfolioLabel = in.readString();
+        privateGalleryLabel = in.readString();
+        googleMapDirection = in.readString();
     }
 
     @Override
@@ -130,6 +143,9 @@ public class Photographer implements Parcelable {
         dest.writeString(instagramLink);
         dest.writeString(linkedinLink);
         dest.writeString(pinterestLink);
+        dest.writeString(portfolioLabel);
+        dest.writeString(privateGalleryLabel);
+        dest.writeString(googleMapDirection);
     }
 
     @Override

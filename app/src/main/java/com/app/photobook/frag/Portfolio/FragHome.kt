@@ -5,11 +5,13 @@ import android.os.Bundle
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentStatePagerAdapter
 import android.support.v4.content.LocalBroadcastManager
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.app.photobook.CustomApp
+import com.app.photobook.MainActivity
 import com.app.photobook.R
 import com.app.photobook.model.PortfolioRes
 import com.app.photobook.model.User
@@ -18,6 +20,7 @@ import com.app.photobook.tools.Constants
 import com.app.photobook.tools.MyPrefManager
 import com.app.photobook.tools.Utils
 import kotlinx.android.synthetic.main.frag_portfolio_home.view.*
+import kotlinx.android.synthetic.main.navigation_toolbar.view.*
 import org.apache.http.HttpStatus
 import retrofit2.Call
 import retrofit2.Callback
@@ -42,6 +45,13 @@ class FragHome : Fragment() {
         user = myPrefManager.userDetails
 
         //myView.tvEmptyMsg.typeface = CustomApp.getFontNormal()
+
+        var title = "Portfolio"
+        if ((activity as MainActivity).photographer != null &&
+                !TextUtils.isEmpty((activity as MainActivity).photographer.portfolioLabel)) {
+            title = (activity as MainActivity).photographer.portfolioLabel
+        }
+        myView.toolbar.title = title
 
         val app = activity!!.application as CustomApp
         retroApi = app.retroApi
@@ -72,7 +82,11 @@ class FragHome : Fragment() {
 
     private fun fetchAlbums() {
 
-        if (!Utils.isOnline(activity)) {
+        if (isDetached) {
+            return
+        }
+
+        if (!Utils.isOnline(context)) {
             //Utils.showNoInternetMessage(activity, myView.llProgress)
             myView.llProgress.visibility = View.GONE
             sendEmptyBroadcast()

@@ -113,6 +113,15 @@ public class Constants {
     public static final int VIDEO_TYPE_YOUTUBE = 1;
     public static final int VIDEO_TYPE_VIMEO = 2;
 
+    public static final String TITLE_FACEBOOK = "www.facebook.com/%s";
+    public static final String TITLE_GOOGLE = "www.plus.google.com/%s";
+    public static final String TITLE_TWITTER = "www.twitter.com/%s";
+    public static final String TITLE_INSTAGRAM = "www.instagram.com/%s";
+    public static final String TITLE_LINKEDIN = "www.in.linkedin.com/%s";
+    public static final String TITLE_PINTEREST = "www.pinterest.com/%s";
+    public static final String TITLE_GOOGLEMAP = "www.maps.google.com/%s";
+
+
     public static final String YOUTUBE_THUMB_VIEW = "https://img.youtube.com/vi/#ID/hqdefault.jpg";
     public static final String VIMEO_THUMB_VIEW = "http://vimeo.com/api/v2/video/#ID.json";
     public static final String VIDEO_PLAY_IFRAME = "<iframe width=\"100%\" height=\"100%\" " +

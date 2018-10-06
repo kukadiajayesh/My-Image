@@ -9,11 +9,11 @@
 
 
     <!--URL Details-->
-    <string name="base_url">http://album.alivefoto.com/api/</string>
+    <string name="base_url">http://album.alivefoto.com/api_v2/</string>
     <string name="photographer_id">25</string>
     <string name="share_text">Hello Friends, View my Alivefoto %s\n
         Download the app from: http://album.alivefoto.com &amp; use Pin : %s</string>
-    <drawable name="drawable_splash_screen">@drawable/splash_screen_1_1</drawable>
+    <drawable name="drawable_splash_screen">@drawable/splash_screen_1_2</drawable>
 
     <!--<string name="base_url">http://design.alivefoto.com/ap-api/</string>
     <string name="url_username">appuser</string>
@@ -38,7 +38,8 @@
     <string name="message_empty_user">There are no Brownie Users</string>
     <string name="message_empty_notifications">It seems you don\'t have any notifications</string>
     <string name="message_no_internet">Internet is not connected</string>
-    <string name="message_no_limit_reached">Sorry!\nYou have reached to maximum selection limit. Please contact your photographer to upgrade the selection limit at #mobile_no</string>
+    <!--<string name="message_no_limit_reached">Sorry!\nYou have reached to maximum selection limit. Please contact your photographer to upgrade the selection limit at #mobile_no</string>-->
+    <string name="message_no_limit_reached">Sorry!\nYou have reached maximum selection limit of #limit images. Please contact your photographer to upgrade the selection limit at #mobile_no</string>
 
     <string name="menu_title_home">Home</string>
     <string name="menu_title_album">Album</string>
@@ -78,6 +79,8 @@
     <string name="title_comment">Comments</string>
     <string name="title_share">Share</string>
     <string name="title_refresh">Refresh</string>
+    <string name="message_call_string_empty">Unable to call, Mobile no is empty</string>
+    <string name="message_error_max_selection">Max Selection limit has been changed</string>
 
     <string-array name="theme_array">
         <item>Brown</item>

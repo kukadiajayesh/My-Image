@@ -173,7 +173,7 @@ class GalleryAdapter(private val staggeredGalleryActivity: StaggeredGalleryActiv
                     mBundle.putParcelableArrayList("albumImages", albumImages)
                     mBundle.putParcelable("album", album)
                     mBundle.putInt("key_pos", pos)
-                    mBundle.putBoolean("view_mode", true)
+                    mBundle.putBoolean("view_mode", staggeredGalleryActivity.liveMode)
                     mIntent.putExtras(mBundle)
                     staggeredGalleryActivity.startActivity(mIntent)
                 }

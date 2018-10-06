@@ -2,8 +2,8 @@
 <resources>
     <color name="colorPrimary">@color/app_default_color</color>
     <color name="colorPrimaryDark">@color/app_default_color_dark</color>
-    <color name="colorAccent">@color/color_orange</color>
-    <color name="colorAccentDark">@color/color_orange_dark</color>
+    <color name="colorAccent">@color/app_default_color</color> <!--color_orange-->
+    <color name="colorAccentDark">@color/app_default_color_dark</color> <!--color_orange_dark-->
 
     <color name="colorAccentLight">#fff</color>
     <color name="color_white">#fff</color>
@@ -80,5 +80,6 @@
     <color name="color3">#5D4C46</color>
     <color name="color4">#F1A94E</color>
     <color name="app_color">#B1CB20</color>
+    <color name="image_border_color">#cccccc</color>
 
 </resources>

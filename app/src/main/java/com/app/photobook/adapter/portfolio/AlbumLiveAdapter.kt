@@ -30,7 +30,7 @@ class AlbumLiveAdapter(internal var context: Context,
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
         val album = albums[position]
-        holder.itemView.tvTitle!!.text = "Title: " + album.eventName + Constants.BLANK_SPACES
+        holder.itemView.tvTitle!!.text = album.eventName + Constants.BLANK_SPACES
 
         if (album.images != null) {
             if (album.images.size > 0) {

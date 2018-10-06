@@ -87,6 +87,7 @@
 #Custom
 -keep class com.photobook.glimpse.model.** { *; }
 -keep class com.photobook.model.** { *; }
+-keep class com.photobook.om.multi.vision.** { *; }
 -keep class org.apache.** { *; }
 -dontwarn rx.internal.util.unsafe.**
 -dontwarn okio.**

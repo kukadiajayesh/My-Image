@@ -40,6 +40,7 @@ public class CustomApp extends Application {
         roomDatabaseClass = Room.databaseBuilder(this, RoomDatabaseClass.class, Constants.DATABASE_NAME)
                 .allowMainThreadQueries()
                 .addMigrations(MIGRATION_1_2)
+                .addMigrations(MIGRATION_2_3)
                 .build();
     }
 
@@ -48,6 +49,16 @@ public class CustomApp extends Application {
         public void migrate(SupportSQLiteDatabase database) {
             database.execSQL("ALTER TABLE Album ADD COLUMN path TEXT");
             Log.e(TAG, "migrate: 1 -> 2");
+        }
+    };
+
+    Migration MIGRATION_2_3 = new Migration(2, 3) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            database.execSQL("ALTER TABLE Photographer ADD COLUMN portfolioLabel TEXT");
+            database.execSQL("ALTER TABLE Photographer ADD COLUMN privateGalleryLabel TEXT");
+            database.execSQL("ALTER TABLE Photographer ADD COLUMN googleMapDirection TEXT");
+            Log.e(TAG, "migrate: 2 -> 3");
         }
     };
 

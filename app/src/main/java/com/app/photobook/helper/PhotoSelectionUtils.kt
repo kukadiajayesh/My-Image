@@ -37,6 +37,7 @@ class PhotoSelectionUtils(var context: Context,
                 mobile = photographer.mobile
             }
             msg = msg.replace("#mobile_no", mobile)
+            msg = msg.replace("#limit", eventMaximumSelect.toString())
 
             Utils.showDialog(context, context.getString(R.string.app_name),
                     msg, null)

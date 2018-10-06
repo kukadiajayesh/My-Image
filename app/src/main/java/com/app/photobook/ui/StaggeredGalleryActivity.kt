@@ -14,6 +14,7 @@ import android.support.v7.widget.StaggeredGridLayoutManager
 import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import android.widget.LinearLayout
 import android.widget.Toast
 import com.app.photobook.CustomApp
@@ -52,6 +53,7 @@ class StaggeredGalleryActivity : AppCompatActivity() {
     internal lateinit var commentDialog: CommentDialog
     internal lateinit var roomDatabaseClass: RoomDatabaseClass
     internal lateinit var photoSelectionUtils: PhotoSelectionUtils
+    var totalSelected = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -82,6 +84,12 @@ class StaggeredGalleryActivity : AppCompatActivity() {
         //getSelectionEvent()
         //sdfsd()
 
+        if (liveMode) {
+            llSelectionFooter.visibility = View.GONE
+        }
+
+        tvTotal.text = "Total : " + album.images.size.toString()
+
         commentDialog = CommentDialog(this, retroApi, dialogLayout as LinearLayout)
         roomDatabaseClass = CustomApp.getRoomDatabaseClass()
         photoSelectionUtils = PhotoSelectionUtils(this, roomDatabaseClass, album, albumImages)
@@ -111,11 +119,26 @@ class StaggeredGalleryActivity : AppCompatActivity() {
             galleryAdapter!!.notifyDataSetChanged()
             invalidateOptionsMenu()
             photoSelectionUtils = PhotoSelectionUtils(this, roomDatabaseClass, album, albumImages)
+            updateCounter()
+        }
+    }
+
+    private fun updateCounter() {
+        totalSelected = 0
+        albumImages.forEach { item ->
+            if (item.selected) {
+                totalSelected++
+            }
         }
     }
 
     private fun initializeActionBar() {
-        toolbar!!.title = album.eventName + " (" + album.images.size + ")"
+        if (liveMode) {
+            toolbar!!.title = album.eventName + " (" + album.images.size + ")"
+        } else {
+            toolbar!!.title = album.eventName
+        }
+        //toolbar!!.title = album.eventName + " (" + album.images.size + ")"
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
     }
@@ -157,6 +180,9 @@ class StaggeredGalleryActivity : AppCompatActivity() {
             var menuSubmit = menu!!.findItem(R.id.action_submit)
             menuSubmit.actionView.setOnClickListener { onOptionsItemSelected(menuSubmit) }
             menuSubmit.isVisible = album.eventType == Constants.GALLERY_TYPE_SELECTION
+            updateCounter()
+            //toolbar!!.title = album.eventName + " (" + totalSelected.toString() + " / " + album.images.size + ")"
+            tvSelectionCounter.text = "Selection:  " + totalSelected.toString() + " / " + album.eventMaximumSelect
         }
 
         return super.onCreateOptionsMenu(menu)
@@ -218,7 +244,9 @@ class StaggeredGalleryActivity : AppCompatActivity() {
 
                         }
 
-                        Toast.makeText(this@StaggeredGalleryActivity, msg, Toast.LENGTH_LONG).show()
+                        Utils.showDialog(this@StaggeredGalleryActivity, getString(R.string.app_name),
+                                msg, null)
+                        //Toast.makeText(this@StaggeredGalleryActivity, msg, Toast.LENGTH_LONG).show()
 
                     } else {
                         var res = response.errorBody().string()
@@ -289,7 +317,8 @@ class StaggeredGalleryActivity : AppCompatActivity() {
         photoSelectionUtils.setMaxEventSelection(maxLimit)
         hasSelectionChanged = true
 
-        Toast.makeText(this, "Max Selection limit has been changed", Toast.LENGTH_LONG).show()
+        Utils.showDialog(this@StaggeredGalleryActivity, getString(R.string.app_name),
+                getString(R.string.message_error_max_selection), null)
     }
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {

@@ -35,7 +35,7 @@ class AlbumAdapter(internal var context: Context, internal var fragAlbumHome: Fr
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
         val album = albums[position]
-        holder.itemView.tvTitle!!.text = "Title: " + album.eventName + Constants.BLANK_SPACES
+        holder.itemView.tvTitle!!.text = album.eventName + Constants.BLANK_SPACES
 
         //viewHolder.tvPhotograph.setText(album.photographyBy);
         /*try {

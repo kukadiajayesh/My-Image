@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.app.Fragment
 import android.support.v4.app.FragmentManager
+import android.support.v7.app.AlertDialog
 import android.text.TextUtils
 import android.view.View
 import android.widget.Toast
@@ -17,6 +18,7 @@ import com.app.photobook.frag.FragPhotographer
 import com.app.photobook.frag.Portfolio.FragHome
 import com.app.photobook.model.Photographer
 import com.app.photobook.room.RoomDatabaseClass
+import com.app.photobook.tools.Utils
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -26,7 +28,7 @@ class MainActivity : BaseActivity() {
     private var mBackPressed: Long = 0
 
     internal lateinit var roomDatabaseClass: RoomDatabaseClass
-    internal lateinit var photographer: Photographer
+    lateinit var photographer: Photographer
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,11 +37,13 @@ class MainActivity : BaseActivity() {
 
         fragmentManager = supportFragmentManager
         roomDatabaseClass = CustomApp.getRoomDatabaseClass()
-
-        val fragment = FragPhotographer()
-        switchFrag(fragment)
-
         photographer = roomDatabaseClass.daoPhotographer().clientInfo
+
+        if (Utils.isOnline(this)) {
+            selectBottomMenu(R.id.flPortfolio)
+        } else {
+            selectBottomMenu(R.id.flHome)
+        }
 
         initBottomNavigator()
     }
@@ -52,9 +56,22 @@ class MainActivity : BaseActivity() {
         //flEmail.setOnClickListener(onClick)
     }
 
-
     var onClick = View.OnClickListener { v ->
-        when (v.id) {
+        selectBottomMenu(v.id)
+    }
+
+    fun selectBottomMenu(id: Int) {
+
+        when (id) {
+            R.id.flPortfolio -> {
+                var fragHome = FragHome()
+                switchFrag(fragHome)
+
+                viewSelectedHome.visibility = View.GONE
+                viewSelectedAlbums.visibility = View.GONE
+                viewSelectedCall.visibility = View.GONE
+                viewSelectedPortfolio.visibility = View.VISIBLE
+            }
             R.id.flHome -> {
                 var fragPhotographer = FragPhotographer()
                 switchFrag(fragPhotographer)
@@ -73,15 +90,6 @@ class MainActivity : BaseActivity() {
                 viewSelectedCall.visibility = View.GONE
                 viewSelectedPortfolio.visibility = View.GONE
             }
-            R.id.flPortfolio -> {
-                var fragHome = FragHome()
-                switchFrag(fragHome)
-
-                viewSelectedHome.visibility = View.GONE
-                viewSelectedAlbums.visibility = View.GONE
-                viewSelectedCall.visibility = View.GONE
-                viewSelectedPortfolio.visibility = View.VISIBLE
-            }
 
         /*R.id.flEmail -> {
             Utils.sendEmail(this@MainActivity, photographer.email)
@@ -93,15 +101,29 @@ class MainActivity : BaseActivity() {
 
         }*/
             R.id.flCall -> {
-                onCallBtnClick()
 
-                viewSelectedHome.visibility = View.GONE
-                viewSelectedAlbums.visibility = View.GONE
-                viewSelectedCall.visibility = View.VISIBLE
-                viewSelectedPortfolio.visibility = View.GONE
+                if (TextUtils.isEmpty(photographer.mobile)) {
+                    Toast.makeText(this, R.string.message_call_string_empty, Toast.LENGTH_SHORT).show()
+                    return
+                }
+
+                AlertDialog.Builder(this)
+                        .setMessage(photographer.mobile)
+                        .setPositiveButton("Call") { dialog, which ->
+                            onCallBtnClick()
+
+                            viewSelectedHome.visibility = View.GONE
+                            viewSelectedAlbums.visibility = View.GONE
+                            viewSelectedCall.visibility = View.VISIBLE
+                            viewSelectedPortfolio.visibility = View.GONE
+                        }
+                        .setNegativeButton("Cancel", null)
+                        .show()
+
             }
 
         }
+
     }
 
     private fun onCallBtnClick() {

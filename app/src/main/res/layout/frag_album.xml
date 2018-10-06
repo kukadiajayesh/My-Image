@@ -4,10 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical"
     android:background="@color/home_screen_bg"
+    android:orientation="vertical"
     tools:context="com.app.photobook.MainActivity">
 
+    <include layout="@layout/navigation_toolbar" />
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
@@ -41,22 +42,20 @@
 
     </android.support.v7.widget.CardView>
 
-
     <include
         android:id="@+id/frmEmpty"
         layout="@layout/view_empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        android:visibility="gone"/>
-
+        android:visibility="gone" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="1"
-        tools:listitem="@layout/list_item_photo_album"/>
+        tools:listitem="@layout/list_item_photo_album" />
 
     <android.support.design.widget.FloatingActionButton
         android:id="@+id/fbAdd"

@@ -32,9 +32,11 @@ public interface RetroApi {
 */
 
 
-    @GET("album/{id}/{pin}")
+    @FormUrlEncoded
+    @POST("album/{id}")
     Call<AlbumRes> getAlbum(@Path("id") String id,
-                            @Path("pin") String pin);
+                            @Field("pin") String pin,
+                            @Field("user_id") String userId);
 
     @FormUrlEncoded
     @POST("registerApp/{id}")

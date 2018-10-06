@@ -18,35 +18,6 @@
         android:orientation="horizontal">
 
         <FrameLayout
-            android:id="@+id/flHome"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:background="?selectableItemBackground">
-
-            <View
-                android:id="@+id/viewSelectedHome"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@color/bottomColorSelected" />
-
-            <ImageView
-                android:id="@+id/ivHome"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_gravity="center"
-                android:tint="@color/bottomTextColor"
-                app:srcCompat="@drawable/ic_home_black_24dp" />
-
-        </FrameLayout>
-
-        <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="@color/icon_gray_light" />
-
-
-        <FrameLayout
             android:id="@+id/flPortfolio"
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -96,6 +67,34 @@
                 android:layout_gravity="center"
                 android:tint="@color/bottomTextColor"
                 app:srcCompat="@drawable/ic_menu_album" />
+
+        </FrameLayout>
+
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="@color/icon_gray_light" />
+
+        <FrameLayout
+            android:id="@+id/flHome"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="?selectableItemBackground">
+
+            <View
+                android:id="@+id/viewSelectedHome"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/bottomColorSelected" />
+
+            <ImageView
+                android:id="@+id/ivHome"
+                android:layout_width="32dp"
+                android:layout_height="32dp"
+                android:layout_gravity="center"
+                android:tint="@color/bottomTextColor"
+                app:srcCompat="@drawable/ic_contact_blank_24dp" />
 
         </FrameLayout>
 

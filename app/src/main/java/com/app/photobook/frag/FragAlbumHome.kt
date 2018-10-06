@@ -15,6 +15,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v4.content.LocalBroadcastManager
 import android.support.v7.app.AlertDialog
 import android.support.v7.widget.LinearLayoutManager
+import android.text.TextUtils
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -22,6 +23,7 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import com.app.photobook.CustomApp
+import com.app.photobook.MainActivity
 import com.app.photobook.R
 import com.app.photobook.adapter.AlbumAdapter
 import com.app.photobook.helper.ImageDownloadAndSave
@@ -36,6 +38,7 @@ import com.app.photobook.tools.FileUtils
 import com.app.photobook.tools.MyPrefManager
 import com.app.photobook.tools.Utils
 import kotlinx.android.synthetic.main.frag_album.view.*
+import kotlinx.android.synthetic.main.navigation_toolbar.view.*
 import kotlinx.android.synthetic.main.view_empty.view.*
 import retrofit2.Call
 import retrofit2.Callback
@@ -78,6 +81,14 @@ class FragAlbumHome : Fragment() {
         retroApi = app.retroApi
 
         setBroadcast()
+
+        var title = "Private Gallery"
+        if ((activity as MainActivity).photographer != null &&
+                !TextUtils.isEmpty((activity as MainActivity).photographer.privateGalleryLabel)) {
+            title = (activity as MainActivity).photographer.privateGalleryLabel
+        }
+        view.toolbar.title = title
+        //view.toolbar.subtitle = "Album Gallery"
 
         view.btnRetry.visibility = View.VISIBLE
         view.btnRetry.setOnClickListener(onClickListener)
@@ -270,7 +281,7 @@ class FragAlbumHome : Fragment() {
         progressDialog.setMessage("Please wait...")
         progressDialog.show()
 
-        val responseBodyCall = retroApi.getAlbum(getString(R.string.photographer_id), pin)
+        val responseBodyCall = retroApi.getAlbum(getString(R.string.photographer_id), pin, user!!.id.toString())
         responseBodyCall.enqueue(responseBodyCallback)
     }
 
