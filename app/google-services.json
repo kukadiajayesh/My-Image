@@ -142,27 +142,11 @@
       },
       "oauth_client": [
         {
-          "client_id": "1013782717573-coh9v065jrpf79h1tnbh2a1jvi897307.apps.googleusercontent.com",
+          "client_id": "1013782717573-p6ncahhc9k4g1g3238gfkkae0s2aamsc.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.cityapp",
-            "certificate_hash": "d88391d78ffeb81160bc21f2a7fa325ad3c82039"
-          }
-        },
-        {
-          "client_id": "1013782717573-qip0s1naia6j1njunivmqo625dlm4jhe.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.cityapp",
-            "certificate_hash": "322d9f9a31ef0d62e53d75396f7c4db3a92348f0"
-          }
-        },
-        {
-          "client_id": "1013782717573-q3cp9lckt31ogjbh0m7iuqji8qoabi7u.apps.googleusercontent.com",
-          "client_type": 1,
-          "android_info": {
-            "package_name": "com.cityapp",
-            "certificate_hash": "71990a6ad0efe62cf4ffc81ea4ac242c909f28a5"
+            "certificate_hash": "7ee9cb789604dc762ef861c54e1311f2d01af148"
           }
         },
         {
@@ -410,37 +394,6 @@
     },
     {
       "client_info": {
-        "mobilesdk_app_id": "1:1013782717573:android:14e7b347df7deb64",
-        "android_client_info": {
-          "package_name": "com.photobook.om.multi.vision"
-        }
-      },
-      "oauth_client": [
-        {
-          "client_id": "1013782717573-uleovbsv4cfh1qu4poa54c0phtfj5l1a.apps.googleusercontent.com",
-          "client_type": 3
-        }
-      ],
-      "api_key": [
-        {
-          "current_key": "AIzaSyBx0S6McKLy9Lfrh63mvjry0gdUUzdsGRE"
-        }
-      ],
-      "services": {
-        "analytics_service": {
-          "status": 1
-        },
-        "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
-        },
-        "ads_service": {
-          "status": 2
-        }
-      }
-    },
-    {
-      "client_info": {
         "mobilesdk_app_id": "1:1013782717573:android:e78f8feb28dffc36",
         "android_client_info": {
           "package_name": "com.pleazer"
@@ -521,6 +474,68 @@
               "client_type": 3
             }
           ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1013782717573:android:aa03bdbf0febb802",
+        "android_client_info": {
+          "package_name": "com.studio.sapna"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1013782717573-uleovbsv4cfh1qu4poa54c0phtfj5l1a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBx0S6McKLy9Lfrh63mvjry0gdUUzdsGRE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1013782717573:android:e84960e2107632f2",
+        "android_client_info": {
+          "package_name": "om.multi.vision"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1013782717573-uleovbsv4cfh1qu4poa54c0phtfj5l1a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBx0S6McKLy9Lfrh63mvjry0gdUUzdsGRE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
         },
         "ads_service": {
           "status": 2

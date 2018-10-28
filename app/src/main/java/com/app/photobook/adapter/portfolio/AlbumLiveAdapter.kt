@@ -6,7 +6,7 @@ import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.app.photobook.ActivityAlbumViewWebview
+import com.app.photobook.ui.ActivityAlbumViewWebview
 import com.app.photobook.R
 import com.app.photobook.model.Album
 import com.app.photobook.tools.Constants

@@ -1,0 +1,251 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/lead_background_color"
+    android:orientation="vertical">
+
+    <include layout="@layout/navigation_toolbar" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/llContainer"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="vertical">
+
+            <TextView
+                style="@style/FieldTitleStyle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Full Name" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/edtName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/shape_background_field"
+                android:maxLength="255"
+                android:maxLines="1"
+                android:padding="10dp" />
+
+            <TextView
+                style="@style/FieldTitleStyle.MarginTop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Email" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/edtEmail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/shape_background_field"
+                android:inputType="textWebEmailAddress"
+                android:maxLength="255"
+                android:maxLines="1"
+                android:padding="10dp" />
+
+            <TextView
+                style="@style/FieldTitleStyle.MarginTop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mobile No" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/edtMobile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/shape_background_field"
+                android:inputType="phone"
+                android:maxLength="10"
+                android:maxLines="1"
+                android:padding="10dp" />
+
+            <TextView
+                style="@style/FieldTitleStyle.MarginTop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Event Date" />
+
+            <RelativeLayout
+                android:id="@+id/btnEventDate"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/shape_background_field">
+
+                <TextView
+                    android:id="@+id/tvEventDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@color/white"
+                    android:paddingLeft="10dp"
+                    android:paddingTop="5dp"
+                    android:paddingRight="20dp"
+                    android:paddingBottom="5dp"
+                    android:text="01/20/2018"
+                    android:textColor="@color/text_color" />
+            </RelativeLayout>
+
+            <TextView
+                style="@style/FieldTitleStyle.MarginTop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Event Location" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/edtLocation"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/shape_background_field"
+                android:inputType="textPostalAddress"
+                android:maxLength="255"
+                android:maxLines="1"
+                android:padding="10dp" />
+
+            <TextView
+                style="@style/FieldTitleStyle.MarginTop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Event Type" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp">
+
+                <android.support.v7.widget.AppCompatSpinner
+                    android:id="@+id/spnEventType"
+                    android:layout_width="match_parent"
+                    android:layout_height="45dp"
+                    android:background="@drawable/shape_background_field"
+                    android:entries="@array/event_type"
+                    android:inputType="number"
+                    android:maxLength="10"
+                    android:maxLines="1"
+                    android:minHeight="45dp" />
+
+                <ImageView
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_marginRight="15dp"
+                    app:srcCompat="@drawable/ic_arrow_drop_down_black_24dp" />
+
+            </RelativeLayout>
+
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/edtEventTypeOther"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/shape_background_field"
+                android:hint="Enter event type"
+                android:maxLength="100"
+                android:maxLines="1"
+                android:padding="10dp"
+                android:visibility="gone" />
+
+
+            <TextView
+                style="@style/FieldTitleStyle.MarginTop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Reference by" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/edtRefBy"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/shape_background_field"
+                android:inputType="textPersonName"
+                android:maxLength="255"
+                android:maxLines="1"
+                android:padding="10dp" />
+
+            <TextView
+                style="@style/FieldTitleStyle.MarginTop"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Message" />
+
+            <android.support.v7.widget.AppCompatEditText
+                android:id="@+id/edtMessage"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@drawable/shape_background_field"
+                android:gravity="top"
+                android:inputType="textMultiLine"
+                android:maxLength="255"
+                android:maxLines="5"
+                android:minLines="3"
+                android:padding="10dp" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="20dp"
+                android:layout_marginTop="30dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginBottom="30dp">
+
+                <Button
+                    android:id="@+id/btnSubmit"
+                    android:layout_width="match_parent"
+                    android:layout_height="44dp"
+                    android:background="@drawable/selector_submit_button_accent"
+                    android:text="Submit"
+                    android:textAllCaps="false"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
+                    android:textColor="#fff"
+                    android:textStyle="bold" />
+
+                <ProgressBar
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:indeterminate="true"
+                    android:visibility="gone" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/bottomContainer"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+                <!-- omitted for brevity -->
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
+    </android.support.v4.widget.NestedScrollView>
+</LinearLayout>

@@ -7,6 +7,7 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.AsyncTask
 import android.os.Bundle
@@ -23,7 +24,6 @@ import android.view.ViewGroup
 import android.widget.EditText
 import android.widget.Toast
 import com.app.photobook.CustomApp
-import com.app.photobook.MainActivity
 import com.app.photobook.R
 import com.app.photobook.adapter.AlbumAdapter
 import com.app.photobook.helper.ImageDownloadAndSave
@@ -37,6 +37,8 @@ import com.app.photobook.tools.Constants
 import com.app.photobook.tools.FileUtils
 import com.app.photobook.tools.MyPrefManager
 import com.app.photobook.tools.Utils
+import com.app.photobook.ui.MainActivity
+import com.wooplr.spotlight.SpotlightView
 import kotlinx.android.synthetic.main.frag_album.view.*
 import kotlinx.android.synthetic.main.navigation_toolbar.view.*
 import kotlinx.android.synthetic.main.view_empty.view.*
@@ -115,14 +117,49 @@ class FragAlbumHome : Fragment() {
 
         DatabaseSync().execute()
 
+        view.postDelayed({
+            showHelp()
+        }, 1000)
+
         return view
     }
 
 
+    fun showHelp() {
+
+        SpotlightView.Builder(activity)
+                .introAnimationDuration(400)
+                .enableRevealAnimation(true)
+                .performClick(true)
+                .fadeinTextDuration(400)
+                .headingTvColor(Color.parseColor("#eb273f"))
+                .headingTvSize(32)
+                .headingTvText(getString(R.string.showcase_add_button_title))
+                .subHeadingTvColor(Color.parseColor("#ffffff"))
+                .subHeadingTvSize(16)
+                .subHeadingTvText(getString(R.string.showcase_add_button))
+                .maskColor(Color.parseColor("#dc000000"))
+                .target(view!!.ivAdd)
+                .lineAnimDuration(400)
+                .lineAndArcColor(Color.parseColor("#eb273f"))
+                .dismissOnTouch(true)
+                .dismissOnBackPress(true)
+                .enableDismissAfterShown(true)
+                .usageId("2") //UNIQUE ID
+                .show()
+    }
+
     internal var downloadListener: ImageDownloadAndSave.DownloadListener = object : ImageDownloadAndSave.DownloadListener {
         override fun onComplete(pos: Int, filename: String) {
 
-            album.images[pos].localFilePath = filename
+            var image = album.images[pos]
+
+            image.localFilePath = filename
+
+            //Set Image width and height
+            val size = Utils.getBitmapWidthHeight(filename)
+            image.width = size[0]
+            image.height = size[1]
 
             if (downloadedImage == album.images.size) {
                 progressDialog.dismiss()
@@ -154,13 +191,12 @@ class FragAlbumHome : Fragment() {
                 var albumRes = response.body()
 
                 if (albumRes.error == 0) {
+                    alertDialog.dismiss()
                     this@FragAlbumHome.album = albumRes.album
                     album.localPath = FileUtils.getDefaultFolder(activity) + album.id + "/"
                     startAlbumFetchProcess()
-
                 } else {
-                    Toast.makeText(activity,
-                            albumRes.message, Toast.LENGTH_LONG).show()
+                    Utils.showDialog(activity, albumRes.message, null)
                     progressDialog.dismiss()
                 }
 
@@ -192,7 +228,7 @@ class FragAlbumHome : Fragment() {
                 }
 
                 Utils.hidekeyboard(activity, edtPin)
-                alertDialog.dismiss()
+                //alertDialog.dismiss()
 
                 fetchAlbum()
             }
@@ -281,7 +317,7 @@ class FragAlbumHome : Fragment() {
         progressDialog.setMessage("Please wait...")
         progressDialog.show()
 
-        val responseBodyCall = retroApi.getAlbum(getString(R.string.photographer_id), pin, user!!.id.toString())
+        val responseBodyCall = retroApi.getAlbum(pin, user!!.id.toString())
         responseBodyCall.enqueue(responseBodyCallback)
     }
 

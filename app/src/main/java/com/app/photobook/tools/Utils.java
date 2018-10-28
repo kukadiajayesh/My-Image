@@ -143,6 +143,15 @@ public class Utils {
         }
     }
 
+    public static int[] getBitmapWidthHeight(String file){
+        final BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;
+        BitmapFactory.decodeFile(file, options);
+        int[] size = new int[2];
+        size[0] = options.outWidth;
+        size[1] = options.outHeight;
+        return size;
+    }
 
     public static Bitmap decodeSampledBitmapFromResource(String file, int reqWidth, int reqHeight) {
 
@@ -566,6 +575,20 @@ public class Utils {
         new AlertDialog.Builder(context)
                 .setTitle(title)
                 .setMessage(message)
+                .setNegativeButton("Ok", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        if (onClickListener != null)
+                            onClickListener.onClick(dialog, which);
+                    }
+                })
+                .show();
+    }
+
+    public static void showDialog(Context context, String title,
+                                  final DialogInterface.OnClickListener onClickListener) {
+        new AlertDialog.Builder(context)
+                .setTitle(title)
                 .setNegativeButton("Ok", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {

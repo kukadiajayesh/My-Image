@@ -54,21 +54,21 @@ class FragVideos : Fragment() {
     private fun updateList() {
 
         if (!Utils.isOnline(activity)) {
-            ShowEmptyMessage(true, false, context.getString(R.string.message_no_internet),
-                    ContextCompat.getDrawable(context, R.drawable.ic_svg_wifi))
+            ShowEmptyMessage(true, false, activity!!.getString(R.string.message_no_internet),
+                    ContextCompat.getDrawable(activity!!, R.drawable.ic_svg_wifi)!!)
             return
         }
 
         if (videos.isEmpty()) {
-            ShowEmptyMessage(true, false, context.getString(R.string.message_empty),
-                    ContextCompat.getDrawable(context, R.drawable.ic_svg_data_no))
+            ShowEmptyMessage(true, false, activity!!.getString(R.string.message_empty),
+                    ContextCompat.getDrawable(activity!!, R.drawable.ic_svg_data_no)!!)
         } else {
-            albumAdapter = VideoAdapter(context, videos)
+            albumAdapter = VideoAdapter(activity!!, videos)
             myView.recyclerView.adapter = albumAdapter
-            myView.recyclerView.addItemDecoration(DividerItemDecoration(context))
+            myView.recyclerView.addItemDecoration(DividerItemDecoration(activity!!))
 
             ShowEmptyMessage(false, false, getString(R.string.message_empty),
-                    ContextCompat.getDrawable(context, R.drawable.ic_svg_data_no))
+                    ContextCompat.getDrawable(activity!!, R.drawable.ic_svg_data_no)!!)
         }
     }
 
@@ -93,7 +93,7 @@ class FragVideos : Fragment() {
 
     fun setBroadCast() {
         var intentFilter = IntentFilter(Constants.ACTION_UPDATE_VIDEO_PORTFOLIO)
-        LocalBroadcastManager.getInstance(context)
+        LocalBroadcastManager.getInstance(activity!!)
                 .registerReceiver(myBroadCast, intentFilter)
     }
 
@@ -113,7 +113,7 @@ class FragVideos : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        LocalBroadcastManager.getInstance(context)
+        LocalBroadcastManager.getInstance(activity!!)
                 .unregisterReceiver(myBroadCast)
     }
 

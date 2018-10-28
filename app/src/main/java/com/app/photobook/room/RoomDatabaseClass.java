@@ -14,7 +14,7 @@ import com.app.photobook.room.dao.PhotographerDao;
  * Created by Jayesh on 11/29/2017.
  */
 
-@Database(entities = {Album.class, AlbumImage.class, Photographer.class}, version = 3)
+@Database(entities = {Album.class, AlbumImage.class, Photographer.class}, version = 4)
 public abstract class RoomDatabaseClass extends RoomDatabase {
     public abstract AlbumDao daoAlbum();
 

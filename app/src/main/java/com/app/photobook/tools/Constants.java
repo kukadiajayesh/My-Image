@@ -47,13 +47,14 @@ public class Constants {
     public static final String PASSWORD_OLD = "Appuser@Gulfphotobook";*/
 
     public static final String DATABASE_NAME = "photo_book";
-
     public static final String ACTIVITY = "activity";
+    public static final String APP_TYPE = "android";
 
     public static final int WIDTH = 2048;
     public static final int HEIGHT = 2048;
 
     public static final int REQUEST_CODE_PERMISSION = 101;
+    public static final int RESPONSE_STATUS_OK = 0;
 
     public static final int MAX_DISPLAY_VALUE = 5;
 

@@ -195,8 +195,7 @@ public class CommentDialog {
                 progressDialog.show();
 
                 //Add Comments
-                Call<ResponseBody> responseBodyCall = retroApi.addComment(context.getString(R.string.photographer_id)
-                        , albumId, pageId, user.id, comment);
+                Call<ResponseBody> responseBodyCall = retroApi.addComment(albumId, pageId, user.id, comment);
                 responseBodyCall.enqueue(new ResponseClass(TYPE_ADD));
 
             } else if (v.getId() == R.id.btnRetry) {
@@ -230,8 +229,7 @@ public class CommentDialog {
         rlProgress.setVisibility(View.VISIBLE);
         recyclerView.setVisibility(View.GONE);
 
-        Call<ResponseBody> responseBodyCall = retroApi.getComments(context.getString(R.string.photographer_id),
-                albumId, pageId);
+        Call<ResponseBody> responseBodyCall = retroApi.getComments(user.id.toString(), albumId, pageId);
         responseBodyCall.enqueue(new ResponseClass(TYPE_GET));
     }
 

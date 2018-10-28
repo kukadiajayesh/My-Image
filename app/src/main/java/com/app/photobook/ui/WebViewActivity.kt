@@ -1,4 +1,4 @@
-package com.app.photobook
+package com.app.photobook.ui
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -6,6 +6,7 @@ import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
 import android.webkit.*
+import com.app.photobook.R
 import kotlinx.android.synthetic.main.activity_webview.*
 
 

@@ -21,6 +21,7 @@ import com.app.photobook.retro.RetroApi
 import com.app.photobook.room.RoomDatabaseClass
 import com.app.photobook.tools.Constants
 import com.app.photobook.tools.Utils
+import com.app.photobook.ui.ActivityInquiryAdd
 import com.squareup.picasso.Callback
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.frag_photographer.view.*
@@ -53,6 +54,7 @@ class FragPhotographer : Fragment() {
         view.llTwitter.setOnClickListener(onClick)
         view.llPintrest.setOnClickListener(onClick)
         view.llLocation.setOnClickListener(onClick)
+        view.fabInquiry.setOnClickListener(onClick)
 
         return view
     }
@@ -66,7 +68,7 @@ class FragPhotographer : Fragment() {
                     return@OnClickListener
                 }
 
-                AlertDialog.Builder(context)
+                AlertDialog.Builder(activity!!)
                         .setMessage(photographer.mobile)
                         .setPositiveButton("Call") { dialog, which ->
                             onCallBtnClick()
@@ -101,6 +103,10 @@ class FragPhotographer : Fragment() {
             R.id.llLocation -> {
                 openLink(photographer.googleMapDirection)
             }
+            R.id.fabInquiry -> {
+                var intent = Intent(activity!!, ActivityInquiryAdd::class.java)
+                startActivity(intent)
+            }
         }
     }
 
@@ -108,7 +114,7 @@ class FragPhotographer : Fragment() {
         if (Build.VERSION.SDK_INT < 23) {
             phoneCall()
         } else {
-            if (ActivityCompat.checkSelfPermission(context,
+            if (ActivityCompat.checkSelfPermission(activity!!,
                             Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
 
                 phoneCall()
@@ -122,24 +128,24 @@ class FragPhotographer : Fragment() {
 
 
     private fun phoneCall() {
-        if (ActivityCompat.checkSelfPermission(context,
+        if (ActivityCompat.checkSelfPermission(activity!!,
                         Manifest.permission.CALL_PHONE) == PackageManager.PERMISSION_GRANTED) {
             val callIntent = Intent(Intent.ACTION_CALL)
 
             var mobile = photographer.mobile
             if (!TextUtils.isEmpty(mobile)) {
                 callIntent.data = Uri.parse("tel:" + photographer.mobile)
-                if (context.packageManager.resolveActivity(callIntent, 0) != null) {
+                if (activity!!.packageManager.resolveActivity(callIntent, 0) != null) {
                     startActivity(callIntent)
                 } else {
                     Toast.makeText(context, "Unable to find calling app", Toast.LENGTH_SHORT).show()
                 }
             } else {
-                Toast.makeText(context, "Mobile is empty", Toast.LENGTH_SHORT).show()
+                Toast.makeText(activity!!, "Mobile is empty", Toast.LENGTH_SHORT).show()
             }
 
         } else {
-            Toast.makeText(context, "You don't assign permission.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(activity!!, "You don't assign permission.", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -156,7 +162,7 @@ class FragPhotographer : Fragment() {
                 if (permissionGranted) {
                     phoneCall()
                 } else {
-                    Toast.makeText(context, "You don't assign permission.", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(activity!!, "You don't assign permission.", Toast.LENGTH_SHORT).show()
                 }
             }
 
@@ -175,7 +181,7 @@ class FragPhotographer : Fragment() {
             val browserIntent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
             startActivity(browserIntent)
         } catch (e: Exception) {
-            Toast.makeText(context, "Unable to open this link", Toast.LENGTH_LONG).show()
+            Toast.makeText(activity!!, "Unable to open this link", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -190,7 +196,7 @@ class FragPhotographer : Fragment() {
          }*/
 
         if (!TextUtils.isEmpty(photographer.logo)) {
-            Picasso.with(context)
+            Picasso.with(activity!!)
                     .load(photographer.logo)
                     .into(view.ivLogo, object : Callback {
                         override fun onSuccess() {
@@ -217,6 +223,7 @@ class FragPhotographer : Fragment() {
             view.tvWebsite.text = "(not available)"
         }
 
+        photographer.businessName = photographer.businessName.replace(" ", "")
         if (!TextUtils.isEmpty(photographer.googleplusLink)) {
             view.tvSocialGoogle.text = String.format(Constants.TITLE_GOOGLE, photographer.businessName)
         } else {
@@ -277,6 +284,7 @@ class FragPhotographer : Fragment() {
     fun removeHttp(url: String): String {
         return url.replace("https://", "")
     }
+
 
     internal fun displayDetails(photographer: Photographer) {
 

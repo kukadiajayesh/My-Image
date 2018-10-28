@@ -1,9 +1,10 @@
-package com.app.photobook
+package com.app.photobook.ui
 
 import android.annotation.SuppressLint
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import android.view.View
+import com.app.photobook.R
 import com.jaedongchicken.ytplayer.YoutubePlayerView
 import com.jaedongchicken.ytplayer.model.YTParams
 

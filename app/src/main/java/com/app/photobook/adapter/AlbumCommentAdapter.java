@@ -13,7 +13,7 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Toast;
 
-import com.app.photobook.ActivityCommentAlbums;
+import com.app.photobook.ui.ActivityCommentAlbums;
 import com.app.photobook.R;
 import com.app.photobook.dialog.CommentAdapter;
 import com.app.photobook.model.AlbumImage;
@@ -124,7 +124,6 @@ public class AlbumCommentAdapter extends RecyclerView.Adapter {
                 int imageId = albums.get(pos).pageId;
 
                 Call<ResponseBody> responseBodyCall = context.getRetroAPI().addComment(
-                        context.getString(R.string.photographer_id),
                         albumId, imageId, user.id, comment);
                 responseBodyCall.enqueue(new Callback<ResponseBody>() {
                     @Override

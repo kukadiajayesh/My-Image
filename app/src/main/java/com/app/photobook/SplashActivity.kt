@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.os.Handler
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
+import android.util.Log
 import android.view.View
 import android.widget.ImageView
 import com.app.photobook.model.PhotographerRes
@@ -12,6 +13,8 @@ import com.app.photobook.retro.RetroApi
 import com.app.photobook.room.RoomDatabaseClass
 import com.app.photobook.tools.MyPrefManager
 import com.app.photobook.tools.Utils
+import com.app.photobook.ui.MainActivity
+import com.app.photobook.ui.UserProfileActivity
 import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.activity_slpash.*
 import retrofit2.Call
@@ -80,14 +83,20 @@ class SplashActivity : AppCompatActivity() {
             return
         }
 
-        getPhotographerInfo(getString(R.string.photographer_id))
+        getPhotographerInfo()
     }
 
-    private fun getPhotographerInfo(photographerId: String) {
+    private fun getPhotographerInfo() {
 
-        val responseBodyCall = retroApi.getPhotographerDetail(photographerId, "")
+        val responseBodyCall = retroApi.getPhotographerDetail("")
         responseBodyCall.enqueue(object : Callback<PhotographerRes> {
             override fun onResponse(call: Call<PhotographerRes>, response: Response<PhotographerRes>) {
+
+                if (response.code() != 200) {
+                    val res = response.errorBody().string()
+                    Log.e(TAG, "onResponse: $res")
+                    return
+                }
 
                 val photographerRes = response.body()
                 if (photographerRes.error == 0) {
@@ -138,5 +147,9 @@ class SplashActivity : AppCompatActivity() {
                 goForward(true)
             }, 1000)
         }
+    }
+
+    companion object {
+        var TAG = SplashActivity::class.java.simpleName
     }
 }

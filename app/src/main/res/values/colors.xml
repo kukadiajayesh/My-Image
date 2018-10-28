@@ -81,5 +81,11 @@
     <color name="color4">#F1A94E</color>
     <color name="app_color">#B1CB20</color>
     <color name="image_border_color">#cccccc</color>
+    <color name="default_image_bg_color">#d3d3d3</color>
+    <color name="full_screen_image_bg">#2a2a2a</color>
+
+    <color name="lead_background_color">#F1F5F7</color>
+    <color name="field_border_color">#d1d6d9</color>
+    <color name="white">#ffffff</color>
 
 </resources>

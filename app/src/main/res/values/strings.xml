@@ -9,8 +9,10 @@
 
 
     <!--URL Details-->
-    <string name="base_url">http://album.alivefoto.com/api_v2/</string>
-    <string name="photographer_id">25</string>
+    <string name="base_url">http://album.alivefoto.com/api/</string>
+    <string name="photographer_id">4G5fweF5</string>
+    <string name="user">4G5fweF5</string>
+    <string name="pwd">4G3d</string>
     <string name="share_text">Hello Friends, View my Alivefoto %s\n
         Download the app from: http://album.alivefoto.com &amp; use Pin : %s</string>
     <drawable name="drawable_splash_screen">@drawable/splash_screen_1_2</drawable>
@@ -82,6 +84,17 @@
     <string name="message_call_string_empty">Unable to call, Mobile no is empty</string>
     <string name="message_error_max_selection">Max Selection limit has been changed</string>
 
+
+    <string-array name="event_type">
+        <item>Select Event Type</item>
+        <item>Pre-Wedding</item>
+        <item>Wedding</item>
+        <item>Birthday</item>
+        <item>Fashion</item>
+        <item>Product</item>
+        <item>Other</item>
+    </string-array>
+
     <string-array name="theme_array">
         <item>Brown</item>
         <item>Red</item>
@@ -131,4 +144,20 @@
         <item name="android:paddingBottom">15dp</item>
         <item name="android:background">?selectableItemBackground</item>
     </style>
+
+
+    <style name="FieldTitleStyle">
+        <item name="android:textColor">@color/text_color</item>
+        <item name="android:layout_marginBottom">5dp</item>
+        <item name="android:layout_marginLeft">20dp</item>
+        <item name="android:textSize">15sp</item>
+    </style>
+
+    <style name="FieldTitleStyle.MarginTop">
+        <item name="android:layout_marginTop">20dp</item>
+    </style>
+
+    <string name="title_dynamic_feature">Module Title</string>
+    <string name="showcase_add_button">Click on the button to add your private client gallery</string>
+    <string name="showcase_add_button_title">Add Album?</string>
 </resources>

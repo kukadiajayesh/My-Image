@@ -5,7 +5,7 @@
     android:id="@+id/container"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.app.photobook.MainActivity">
+    tools:context="com.app.photobook.ui.MainActivity">
 
     <ImageView
         android:id="@+id/ivSplash"
@@ -15,8 +15,8 @@
 
     <ProgressBar
         android:id="@+id/progress"
-        android:layout_width="24dp"
-        android:layout_height="24dp"
+        android:layout_width="32dp"
+        android:layout_height="32dp"
         android:layout_alignParentBottom="true"
         android:layout_centerHorizontal="true"
         android:layout_marginBottom="@dimen/_70sdp" />

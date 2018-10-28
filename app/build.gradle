@@ -4,8 +4,8 @@ apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 
 android {
-    compileSdkVersion rootProject.ext.compileSdkVersion
-    buildToolsVersion rootProject.ext.buildToolsVersion
+    compileSdkVersion 26
+    buildToolsVersion '26.0.1'
 
     defaultConfig {
         applicationId "com.photobook.alivefoto"
@@ -15,6 +15,14 @@ android {
         versionCode 1
         versionName "1.0"
         vectorDrawables.useSupportLibrary = true
+        multiDexEnabled true
+
+        javaCompileOptions {
+            annotationProcessorOptions {
+                arguments = ["room.schemaLocation": "$projectDir/schemas".toString()]
+            }
+        }
+
     }
 
     packagingOptions {
@@ -40,33 +48,58 @@ android {
             applicationId 'com.photobook.alivefoto'
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            versionCode 1
+            versionCode 5
             versionName "1.0"
             vectorDrawables.useSupportLibrary = true
             dimension "color"
+            multiDexEnabled true
         }
 
         OmMultiVision {
+            applicationId 'om.multi.vision'
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            versionCode 6
+            versionName "Om Multi Vision-1.5"
+            vectorDrawables.useSupportLibrary = true
+            dimension "color"
+            multiDexEnabled true
+        }
+
+        StudioSapna {
+            applicationId 'com.studio.sapna'
+            minSdkVersion rootProject.ext.minSdkVersion
+            targetSdkVersion rootProject.ext.targetSdkVersion
+            versionCode 6
+            versionName "Studio Sapna-1.1"
+            vectorDrawables.useSupportLibrary = true
+            dimension "color"
+            multiDexEnabled true
+        }
+
+        /*OmMultiVision {
             applicationId 'com.photobook.om.multi.vision'
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            versionCode 3
-            versionName "1.6"
+            versionCode 6
+            versionName "2.0"
             vectorDrawables.useSupportLibrary = true
             dimension "color"
-        }
+        }*/
     }
+
 }
 
 dependencies {
-    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation fileTree(include: ['*.jar'], dir: 'libs')
     implementation "com.android.support:appcompat-v7:${rootProject.ext.supportLibVersion}"
     implementation "com.android.support:design:${rootProject.ext.supportLibVersion}"
     implementation "com.android.support:cardview-v7:${rootProject.ext.supportLibVersion}"
     implementation "com.android.support:support-vector-drawable:${rootProject.ext.supportLibVersion}"
+    implementation 'com.android.support.constraint:constraint-layout:1.0.2'
+    implementation 'com.android.support:multidex:1.0.3'
 
-    implementation"org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
-
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jre7:$kotlin_version"
     implementation 'com.squareup.retrofit2:converter-scalars:2.1.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
     implementation 'com.squareup.picasso:picasso:2.5.2'
@@ -75,45 +108,31 @@ dependencies {
     implementation 'com.google.code.gson:gson:2.2.4'
     implementation 'com.jakewharton:butterknife:8.6.0'
     implementation 'com.intuit.sdp:sdp-android:1.0.4'
-
     annotationProcessor 'com.jakewharton:butterknife-compiler:8.6.0'
     implementation 'id.zelory:compressor:1.0.4'
     implementation 'com.mikhaellopez:circularimageview:3.0.2'
-
     implementation 'android.arch.persistence.room:runtime:1.0.0'
     annotationProcessor 'android.arch.persistence.room:compiler:1.0.0'
-
     //Firebase Crashlytics
     implementation 'com.crashlytics.sdk.android:crashlytics:2.9.3'
     implementation "com.google.firebase:firebase-core:${rootProject.ext.firebaseLibVersion}"
     compile 'com.google.firebase:firebase-core:16.0.0'
-
     /*
-    implementation "com.google.firebase:firebase-crash:${rootProject.ext.firebaseLibVersion}"*/
+        implementation "com.google.firebase:firebase-crash:${rootProject.ext.firebaseLibVersion}"*/
     //=//
 
-
-    //BigImageView
-    //android.support.v4.content
-    implementation('com.github.piasy:BigImageViewer:1.4.2') {
-    }
-    //load with glide
-    implementation('com.github.piasy:GlideImageLoader:1.4.2') {
-    }
-    // progress pie indicator
-    implementation('com.github.piasy:ProgressPieIndicator:1.4.2') {
-    }
-
     //BottomMenu
-    implementation 'com.github.armcha:LuseenBottomNavigation:1.8.2'
+    //implementation 'com.github.armcha:LuseenBottomNavigation:1.8.2'
 
     //Zoom Image View
     //implementation 'com.github.chrisbanes:PhotoView:2.0.0'
     implementation 'com.github.chrisbanes:PhotoView:2.1.1'
     //implementation 'com.jsibbold:zoomage:1.1.0'
     implementation 'com.alexvasilkov:gesture-views:2.5.2'
-
     implementation 'com.jaedongchicken:ytplayer:1.4.4'
+    //implementation 'com.github.takusemba:spotlight:1.6.1'
+    implementation 'com.github.wooplr:Spotlight:1.2.3'
+    implementation project(':libSpotlight')
 }
 
 apply plugin: 'com.google.gms.google-services'

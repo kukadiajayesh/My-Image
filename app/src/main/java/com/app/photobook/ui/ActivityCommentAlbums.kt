@@ -1,4 +1,4 @@
-package com.app.photobook
+package com.app.photobook.ui
 
 import android.graphics.drawable.Drawable
 import android.os.Bundle
@@ -6,6 +6,7 @@ import android.support.v4.content.ContextCompat
 import android.support.v7.widget.LinearLayoutManager
 import android.view.MenuItem
 import android.view.View
+import com.app.photobook.R
 import com.app.photobook.adapter.AlbumCommentAdapter
 import com.app.photobook.model.AlbumImage
 import com.app.photobook.model.AlbumRes
@@ -109,7 +110,7 @@ class ActivityCommentAlbums : BaseActivity() {
         recyclerView!!.visibility = View.GONE
         rlProgress!!.visibility = View.VISIBLE
 
-        var responseBodyCall = retroApi.getAlbumComments(getString(R.string.photographer_id), pdId)
+        var responseBodyCall = retroApi.getAlbumComments(user.id.toString(), pdId)
         responseBodyCall.enqueue(responseBodyCallback)
     }
 

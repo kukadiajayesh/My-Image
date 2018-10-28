@@ -9,7 +9,7 @@
     android:paddingBottom="20dp"
     android:paddingRight="10dp"
     android:paddingTop="20dp"
-    tools:context="com.app.photobook.MainActivity">
+    tools:context="com.app.photobook.ui.MainActivity">
 
     <TextView
         android:layout_width="wrap_content"

@@ -26,6 +26,7 @@ public class MyPrefManager {
     public static final String KEY_USER_JSON = "key_user_json";
     public static final String KEY_USER_TOKEN = "token";
     public static final String KEY_MUSIC_STATUS = "music";
+    private static final String SET_UPDATE = "set_later_version_code";
 
     // Constructor
     public MyPrefManager(Context context) {
@@ -95,6 +96,16 @@ public class MyPrefManager {
     // Check for login
     public boolean isUserLoggedIn() {
         return pref.contains(KEY_USER_JSON);
+    }
+
+    public void setLaterVersionCode(int update) {
+        editor = pref.edit();
+        editor.putInt(SET_UPDATE, update);
+        editor.commit();
+    }
+
+    public int getLaterVersion() {
+        return pref.getInt(SET_UPDATE, 0);
     }
 
     public SharedPreferences getPref() {

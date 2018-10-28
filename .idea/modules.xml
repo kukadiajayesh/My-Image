@@ -4,6 +4,7 @@
     <modules>
       <module fileurl="file://$PROJECT_DIR$/Alivefoto.iml" filepath="$PROJECT_DIR$/Alivefoto.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://$PROJECT_DIR$/libSpotlight/libSpotlight.iml" filepath="$PROJECT_DIR$/libSpotlight/libSpotlight.iml" />
     </modules>
   </component>
 </project>

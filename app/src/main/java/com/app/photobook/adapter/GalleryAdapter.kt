@@ -6,12 +6,13 @@ import android.graphics.drawable.Drawable
 import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
+import android.support.constraint.ConstraintLayout
+import android.support.constraint.ConstraintSet
 import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.RelativeLayout
 import com.app.photobook.CustomApp
 import com.app.photobook.R
 import com.app.photobook.model.Album
@@ -24,11 +25,11 @@ import com.bumptech.glide.Glide
 import com.bumptech.glide.load.DataSource
 import com.bumptech.glide.load.engine.DiskCacheStrategy
 import com.bumptech.glide.load.engine.GlideException
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.bumptech.glide.request.RequestListener
 import com.bumptech.glide.request.RequestOptions
 import com.bumptech.glide.request.target.Target
 import com.squareup.picasso.Callback
-import com.squareup.picasso.Picasso
 import kotlinx.android.synthetic.main.view_album_image.view.*
 import java.io.File
 import java.util.*
@@ -44,6 +45,16 @@ class GalleryAdapter(private val staggeredGalleryActivity: StaggeredGalleryActiv
     internal var roomDatabaseClass = CustomApp.getRoomDatabaseClass()
     var handler = Handler()
 
+    private val set = ConstraintSet()
+    var mHeighMin: Int = 0
+    var mHeightMax: Int = 0
+
+    init {
+        mHeighMin = staggeredGalleryActivity.getResources().getDimension(R.dimen.height_min).toInt()
+        mHeightMax = staggeredGalleryActivity.getResources().getDimension(R.dimen.height_max).toInt()
+    }
+
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         val li = staggeredGalleryActivity
                 .getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
@@ -57,11 +68,22 @@ class GalleryAdapter(private val staggeredGalleryActivity: StaggeredGalleryActiv
         val albumImage = albumImages!![position]
         val path = albumImage.localFilePath
 
+        if (albumImage.holderHeight == 0) {
+            albumImage.holderHeight = getRandomIntInRange(mHeightMax, mHeighMin)
+            //holder.itemView.layoutParams.height = albumImage.holderHeight
+        }
+        holder.itemView.layoutParams.height = albumImage.holderHeight
+
+        //Log.e(TAG, "Imageview Width: " + holder.itemView.album_image.width.toString())
+
+
         /*if (albumImage.imageHeight != 0) {
             holder.itemView.album_image.layoutParams.height = albumImage.imageHeight
         }*/
         //holder.itemView.album_image.layoutParams.height = 0
         //holder.itemView.album_image.setImageBitmap(null)
+
+        //holder.itemView.album_image.layoutParams.height = 200
 
         if (album.eventType == Constants.GALLERY_TYPE_SELECTION && !staggeredGalleryActivity.liveMode) {
             holder.itemView.chk.visibility = View.VISIBLE
@@ -88,13 +110,13 @@ class GalleryAdapter(private val staggeredGalleryActivity: StaggeredGalleryActiv
             val options = RequestOptions()
                     .diskCacheStrategy(DiskCacheStrategy.ALL)
                     .override(Target.SIZE_ORIGINAL)
+                    .placeholder(R.drawable.shape_image_thumb)
                     .dontTransform()
 
             Glide.with(holder.itemView.album_image)
                     .load(albumImage.url)
+                    .transition(DrawableTransitionOptions.withCrossFade())
                     .apply(options)
-                    //.thumbnail(thumbRequest)
-                    .listener(customListener)
                     .into(holder.itemView.album_image)
 
         } else {
@@ -105,16 +127,25 @@ class GalleryAdapter(private val staggeredGalleryActivity: StaggeredGalleryActiv
                 //viewHolder.album_image.setImageURI(uri);
 
                 val file = File(albumImage.localFilePath)
-                Picasso.with(staggeredGalleryActivity)
-                        .load(file)
-                        .into(holder.itemView.album_image, customListener)
+                /*
+                   Picasso.with(staggeredGalleryActivity)
+                           .load(file)
+                           .into(holder.itemView.album_image, customListener)*/
+
+                val options = RequestOptions()
+                        .diskCacheStrategy(DiskCacheStrategy.ALL)
+                        .override(Target.SIZE_ORIGINAL)
+                        .placeholder(R.drawable.shape_image_thumb)
+                        .dontTransform()
 
                 //updateBorderSize(holder)
-                /*Glide.with(staggeredGalleryActivity)
-                        .load(file)
+                Glide.with(staggeredGalleryActivity)
+                        .load(Uri.fromFile(file))
                         .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.AUTOMATIC))
                         .transition(DrawableTransitionOptions.withCrossFade())
-                        .into(viewHolder.album_image);*/
+                        .apply(options)
+                        .listener(customListener)
+                        .into(holder.itemView.album_image)
             } else {
                 holder.itemView.album_image!!.setImageResource(R.drawable.nophotos)
 
@@ -122,7 +153,20 @@ class GalleryAdapter(private val staggeredGalleryActivity: StaggeredGalleryActiv
                 holder.itemView.rlMain.setBackgroundColor(Color.WHITE)
                 holder.itemView.rlMain.setPadding(0, 0, 0, 0)*/
             }
+
+
+            /*with(albumImages!![position]) {
+
+                with(set) {
+                    val radio = String.format("%d:%d", width, height)
+                    clone(holder.itemView.parentContsraint)
+                    setDimensionRatio(holder.itemView.album_image.id, radio)
+                    applyTo(holder.itemView.parentContsraint)
+                }
+            }*/
         }
+
+
     }
 
     internal inner class CustomListener(var pos: Int, var holder: RecyclerView.ViewHolder) :
@@ -207,8 +251,8 @@ class GalleryAdapter(private val staggeredGalleryActivity: StaggeredGalleryActiv
         }
 
         override fun onError() {
-            holder.itemView.rlMain.setBackground(null)
-            holder.itemView.rlMain.setPadding(0, 0, 0, 0)
+            holder.itemView.parentContsraint.setBackground(null)
+            holder.itemView.parentContsraint.setPadding(0, 0, 0, 0)
         }
 
         override fun onLoadFailed(e: GlideException?, model: Any?, target: Target<Drawable>?, isFirstResource: Boolean): Boolean {
@@ -217,9 +261,13 @@ class GalleryAdapter(private val staggeredGalleryActivity: StaggeredGalleryActiv
 
         override fun onResourceReady(resource: Drawable?, model: Any?, target: Target<Drawable>?, dataSource: DataSource?, isFirstResource: Boolean): Boolean {
 
-            handler.postDelayed({
+            /*handler.postDelayed({
                 albumImages!![pos].imageHeight = holder.itemView.album_image.layoutParams.height
-            }, 50)
+            }, 50)*/
+
+            /* var layoutHeight = resource!!.intrinsicHeight
+             Log.e(TAG, "Height: " + albumImages!![pos].height + " = " + layoutHeight)*/
+            setSelectImage(holder, albumImages!![pos])
 
             return false
         }
@@ -229,9 +277,10 @@ class GalleryAdapter(private val staggeredGalleryActivity: StaggeredGalleryActiv
 
         holder.itemView.chk.isChecked = albumImage.selected
         if (albumImage.selected) {
+            holder.itemView.viewBorder.visibility = View.VISIBLE
             //holder.itemView.rlMain.setBackgroundColor(ContextCompat.getColor(staggeredGalleryActivity, R.color.ImageBorderColor))
             //holder.itemView.album_image.setPadding(imageBorder, imageBorder, imageBorder, imageBorder)
-            updateBorderSize(holder)
+            // updateBorderSize(holder)
         } else {
             //holder.itemView.rlMain.setBackground(null)
             //holder.itemView.album_image.setPadding(0, 0, 0, 0)
@@ -246,7 +295,7 @@ class GalleryAdapter(private val staggeredGalleryActivity: StaggeredGalleryActiv
 
         handler.postDelayed({
             holder.itemView.viewBorder.visibility = View.VISIBLE
-            var layoutParams = holder.itemView.viewBorder.layoutParams as RelativeLayout.LayoutParams
+            var layoutParams = holder.itemView.viewBorder.layoutParams as ConstraintLayout.LayoutParams
             layoutParams.width = holder.itemView.album_image.measuredWidth
             layoutParams.height = holder.itemView.album_image.measuredHeight
             holder.itemView.viewBorder.requestLayout()
@@ -259,6 +308,13 @@ class GalleryAdapter(private val staggeredGalleryActivity: StaggeredGalleryActiv
     }
 
     internal class ViewHolder(view: View) : RecyclerView.ViewHolder(view)
+
+    private val mRandom = Random()
+
+    // Custom method to get a random number between a range
+    protected fun getRandomIntInRange(max: Int, min: Int): Int {
+        return mRandom.nextInt(max - min + min) + min
+    }
 
     companion object {
         private var TAG = GalleryAdapter.javaClass.simpleName

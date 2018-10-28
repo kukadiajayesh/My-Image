@@ -53,7 +53,6 @@ class PhotoSelectionUtils(var context: Context,
         for (images in albumImages!!) {
             if (images.selected) {
                 if (ids.isEmpty()) ids.append(images.id) else ids.append("," + images.id)
-                break
             }
         }
         return ids.toString()

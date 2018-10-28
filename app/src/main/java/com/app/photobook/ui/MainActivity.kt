@@ -1,8 +1,9 @@
-package com.app.photobook
+package com.app.photobook.ui
 
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -12,13 +13,22 @@ import android.support.v4.app.FragmentManager
 import android.support.v7.app.AlertDialog
 import android.text.TextUtils
 import android.view.View
+import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
+import com.app.photobook.CustomApp
+import com.app.photobook.R
 import com.app.photobook.frag.FragAlbumHome
 import com.app.photobook.frag.FragPhotographer
 import com.app.photobook.frag.Portfolio.FragHome
 import com.app.photobook.model.Photographer
 import com.app.photobook.room.RoomDatabaseClass
+import com.app.photobook.tools.AppUpdateUtils
 import com.app.photobook.tools.Utils
+import com.takusemba.spotlight.OnTargetStateChangedListener
+import com.takusemba.spotlight.Spotlight
+import com.takusemba.spotlight.shape.Circle
+import com.takusemba.spotlight.target.SimpleTarget
+import com.wooplr.spotlight.SpotlightView
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -46,6 +56,18 @@ class MainActivity : BaseActivity() {
         }
 
         initBottomNavigator()
+
+        //App Version Checking
+        AppUpdateUtils(this, retroApi, myPrefManager).fetchJson()
+
+        /*flAlbums.postDelayed({
+            showHelp()
+        }, 500)*/
+
+        flAlbums.postDelayed({
+            showHelp()
+        }, 1000)
+
     }
 
     fun initBottomNavigator() {
@@ -91,15 +113,15 @@ class MainActivity : BaseActivity() {
                 viewSelectedPortfolio.visibility = View.GONE
             }
 
-        /*R.id.flEmail -> {
-            Utils.sendEmail(this@MainActivity, photographer.email)
+            /*R.id.flEmail -> {
+                Utils.sendEmail(this@MainActivity, photographer.email)
 
-            viewSelectedHome.visibility = View.GONE
-            viewSelectedAlbums.visibility = View.GONE
-            viewSelectedCall.visibility = View.GONE
-            viewSelectedEmail.visibility = View.VISIBLE
+                viewSelectedHome.visibility = View.GONE
+                viewSelectedAlbums.visibility = View.GONE
+                viewSelectedCall.visibility = View.GONE
+                viewSelectedEmail.visibility = View.VISIBLE
 
-        }*/
+            }*/
             R.id.flCall -> {
 
                 if (TextUtils.isEmpty(photographer.mobile)) {
@@ -192,6 +214,54 @@ class MainActivity : BaseActivity() {
                 .commit()
     }
 
+    fun showHelp2() {
+
+        val simpleTarget = SimpleTarget.Builder(this)
+                .setPoint(flAlbums)
+                .setShape(Circle(200f))
+                .setTitle("the title")
+                .setDescription("the description")
+                .setOnSpotlightStartedListener(object : OnTargetStateChangedListener<SimpleTarget> {
+                    override fun onStarted(target: SimpleTarget) {
+                    }
+
+                    override fun onEnded(target: SimpleTarget) {
+                    }
+                })
+                .build()
+
+        Spotlight.with(this)
+                .setOverlayColor(R.color.background)
+                .setDuration(1000L)
+                .setAnimation(DecelerateInterpolator(2f))
+                .setTargets(simpleTarget)
+                .setClosedOnTouchedOutside(true)
+                .start()
+    }
+
+    fun showHelp() {
+
+        SpotlightView.Builder(this)
+                .introAnimationDuration(400)
+                .enableRevealAnimation(true)
+                .performClick(true)
+                .fadeinTextDuration(400)
+                .headingTvColor(Color.parseColor("#eb273f"))
+                .headingTvSize(32)
+                .headingTvText(getString(R.string.showcase_add_button_title))
+                .subHeadingTvColor(Color.parseColor("#ffffff"))
+                .subHeadingTvSize(16)
+                .subHeadingTvText(getString(R.string.showcase_add_button))
+                .maskColor(Color.parseColor("#dc000000"))
+                .target(findViewById(R.id.flAlbums))
+                .lineAnimDuration(400)
+                .lineAndArcColor(Color.parseColor("#eb273f"))
+                .dismissOnTouch(true)
+                .dismissOnBackPress(true)
+                .enableDismissAfterShown(true)
+                .usageId("1") //UNIQUE ID
+                .show()
+    }
 
     override fun onBackPressed() {
 

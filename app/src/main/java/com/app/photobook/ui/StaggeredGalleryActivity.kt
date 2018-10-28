@@ -24,9 +24,11 @@ import com.app.photobook.dialog.CommentDialog
 import com.app.photobook.helper.PhotoSelectionUtils
 import com.app.photobook.model.Album
 import com.app.photobook.model.AlbumImage
+import com.app.photobook.model.User
 import com.app.photobook.retro.RetroApi
 import com.app.photobook.room.RoomDatabaseClass
 import com.app.photobook.tools.Constants
+import com.app.photobook.tools.MyPrefManager
 import com.app.photobook.tools.Utils
 import kotlinx.android.synthetic.main.activity_gallery.*
 import kotlinx.android.synthetic.main.navigation_toolbar.*
@@ -44,6 +46,9 @@ class StaggeredGalleryActivity : AppCompatActivity() {
     internal lateinit var progressDialog: ProgressDialog
     internal lateinit var album: Album
     internal lateinit var albumImages: ArrayList<AlbumImage>
+
+    internal lateinit var myPrefManager: MyPrefManager
+    internal var user: User? = null
 
     private var galleryAdapter: GalleryAdapter? = null
     var hasSelectionChanged = false
@@ -69,6 +74,9 @@ class StaggeredGalleryActivity : AppCompatActivity() {
             checkMenuVisibility()
         }
 
+        myPrefManager = MyPrefManager(this)
+        user = myPrefManager.userDetails
+
         val app = application as CustomApp
         retroApi = app.retroApi
 
@@ -81,11 +89,15 @@ class StaggeredGalleryActivity : AppCompatActivity() {
         initializeActionBar()
         initializeView()
         setBroadcast()
-        //getSelectionEvent()
+        getSelectionEvent()
         //sdfsd()
 
         if (liveMode) {
             llSelectionFooter.visibility = View.GONE
+        }
+
+        if (album.eventType != Constants.GALLERY_TYPE_SELECTION) {
+            tvSelectionCounter.visibility = View.GONE
         }
 
         tvTotal.text = "Total : " + album.images.size.toString()
@@ -202,6 +214,7 @@ class StaggeredGalleryActivity : AppCompatActivity() {
     fun promptSubmit(ids: String) {
         val builder1 = AlertDialog.Builder(this@StaggeredGalleryActivity)
         builder1.setMessage("Are you sure want to submit the selection?")
+        builder1.setTitle(getString(R.string.app_name))
         builder1.setCancelable(false)
         builder1.setPositiveButton(
                 "Submit") { dialog, id ->
@@ -228,7 +241,9 @@ class StaggeredGalleryActivity : AppCompatActivity() {
         progressDialog.setMessage("Please wait...")
         progressDialog.show()
 
-        val responseBodyCall = retroApi.submitImages(getString(R.string.photographer_id), ids, album.id.toString())
+        Log.e(TAG, ids)
+
+        val responseBodyCall = retroApi.submitImages(user!!.id.toString(), ids, album.id.toString())
         responseBodyCall.enqueue(object : retrofit2.Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 progressDialog.dismiss()
@@ -262,7 +277,6 @@ class StaggeredGalleryActivity : AppCompatActivity() {
             }
         }
         )
-
     }
 
 
@@ -270,7 +284,7 @@ class StaggeredGalleryActivity : AppCompatActivity() {
 
         if (!Utils.isOnline(this)) return
 
-        val responseBodyCall = retroApi.getMaxSelection(getString(R.string.photographer_id), album.id.toString())
+        val responseBodyCall = retroApi.getMaxSelection(user!!.id.toString(), album.id.toString())
         responseBodyCall.enqueue(object : retrofit2.Callback<ResponseBody> {
             override fun onResponse(call: Call<ResponseBody>, response: Response<ResponseBody>) {
                 try {
@@ -317,8 +331,10 @@ class StaggeredGalleryActivity : AppCompatActivity() {
         photoSelectionUtils.setMaxEventSelection(maxLimit)
         hasSelectionChanged = true
 
-        Utils.showDialog(this@StaggeredGalleryActivity, getString(R.string.app_name),
-                getString(R.string.message_error_max_selection), null)
+        tvSelectionCounter.text = "Selection:  " + totalSelected.toString() + " / " + album.eventMaximumSelect
+
+        /*Utils.showDialog(this@StaggeredGalleryActivity, getString(R.string.app_name),
+                getString(R.string.message_error_max_selection), null)*/
     }
 
     public override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent) {

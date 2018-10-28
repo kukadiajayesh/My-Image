@@ -1,4 +1,4 @@
-package com.app.photobook;
+package com.app.photobook.ui;
 
 import android.content.BroadcastReceiver;
 import android.content.Context;
@@ -19,6 +19,8 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.app.photobook.Database_class;
+import com.app.photobook.R;
 import com.app.photobook.adapter.NotificationAdapter;
 import com.app.photobook.model.NotifyItem;
 import com.app.photobook.tools.Constants;

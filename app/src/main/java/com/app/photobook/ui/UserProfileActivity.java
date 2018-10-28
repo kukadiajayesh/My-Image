@@ -1,4 +1,4 @@
-package com.app.photobook;
+package com.app.photobook.ui;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
@@ -8,6 +8,8 @@ import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.app.photobook.CustomApp;
+import com.app.photobook.R;
 import com.app.photobook.model.User;
 import com.app.photobook.model.UserRes;
 import com.app.photobook.retro.RetroApi;
@@ -120,8 +122,7 @@ public class UserProfileActivity extends BaseActivity {
         }
 
         progressDialog.show();
-        Call<UserRes> responseBodyCall = retroApi.registerUser(getString(R.string.photographer_id),
-                name, email, mobile);
+        Call<UserRes> responseBodyCall = retroApi.registerUser(name, email, mobile);
         responseBodyCall.enqueue(new Callback<UserRes>() {
             @Override
             public void onResponse(Call<UserRes> call, Response<UserRes> response) {

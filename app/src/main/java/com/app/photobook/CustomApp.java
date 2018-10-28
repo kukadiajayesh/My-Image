@@ -5,6 +5,7 @@ import android.arch.persistence.db.SupportSQLiteDatabase;
 import android.arch.persistence.room.Room;
 import android.arch.persistence.room.migration.Migration;
 import android.graphics.Typeface;
+import android.support.multidex.MultiDex;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
@@ -30,6 +31,7 @@ public class CustomApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
+        MultiDex.install(this);
 
         constants = new Constants(this);
 
@@ -41,6 +43,7 @@ public class CustomApp extends Application {
                 .allowMainThreadQueries()
                 .addMigrations(MIGRATION_1_2)
                 .addMigrations(MIGRATION_2_3)
+                .addMigrations(MIGRATION_3_4)
                 .build();
     }
 
@@ -59,6 +62,15 @@ public class CustomApp extends Application {
             database.execSQL("ALTER TABLE Photographer ADD COLUMN privateGalleryLabel TEXT");
             database.execSQL("ALTER TABLE Photographer ADD COLUMN googleMapDirection TEXT");
             Log.e(TAG, "migrate: 2 -> 3");
+        }
+    };
+
+    Migration MIGRATION_3_4 = new Migration(3, 4) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            database.execSQL("ALTER TABLE AlbumImage ADD COLUMN width INTEGER default null");
+            database.execSQL("ALTER TABLE AlbumImage ADD COLUMN height INTEGER default null");
+            Log.e(TAG, "migrate: 3 -> 4");
         }
     };
 
@@ -97,7 +109,8 @@ public class CustomApp extends Application {
         if (retroApi == null) {
             /*retroApi = ServiceGenerator.createService(RetroApi.class, constants.getUsername(),
                     constants.getPassword());*/
-            retroApi = ServiceGenerator.createService(RetroApi.class);
+            retroApi = ServiceGenerator.createService(RetroApi.class, getString(R.string.user),
+                    getString(R.string.pwd));
         }
         return retroApi;
     }

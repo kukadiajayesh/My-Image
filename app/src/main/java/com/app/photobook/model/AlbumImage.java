@@ -22,8 +22,8 @@ public class AlbumImage implements Parcelable {
 
     public String localFilePath;
 
-    @Ignore
-    public int imageHeight = 0;
+    /*@Ignore
+    public int imageHeight = 0;*/
 
     @SerializedName("id")
     @Expose
@@ -60,6 +60,12 @@ public class AlbumImage implements Parcelable {
     @Expose
     public boolean selected = false;
 
+    public Integer width = null;
+    public Integer height = null;
+
+    @Ignore
+    public int holderHeight = 0;
+
     public AlbumImage() {
 
     }
@@ -67,7 +73,6 @@ public class AlbumImage implements Parcelable {
 
     protected AlbumImage(Parcel in) {
         localFilePath = in.readString();
-        imageHeight = in.readInt();
         if (in.readByte() == 0) {
             id = null;
         } else {
@@ -92,12 +97,22 @@ public class AlbumImage implements Parcelable {
         }
         comments = in.createTypedArrayList(Comment.CREATOR);
         selected = in.readByte() != 0;
+        if (in.readByte() == 0) {
+            width = null;
+        } else {
+            width = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            height = null;
+        } else {
+            height = in.readInt();
+        }
+        holderHeight = in.readInt();
     }
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
         dest.writeString(localFilePath);
-        dest.writeInt(imageHeight);
         if (id == null) {
             dest.writeByte((byte) 0);
         } else {
@@ -126,6 +141,19 @@ public class AlbumImage implements Parcelable {
         }
         dest.writeTypedList(comments);
         dest.writeByte((byte) (selected ? 1 : 0));
+        if (width == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(width);
+        }
+        if (height == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(height);
+        }
+        dest.writeInt(holderHeight);
     }
 
     @Override

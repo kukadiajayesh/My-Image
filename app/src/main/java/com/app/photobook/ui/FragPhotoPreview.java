@@ -41,8 +41,8 @@ public class FragPhotoPreview extends Fragment {
         View view = inflater.inflate(R.layout.view_photopreview, container, false);
         ivContent = view.findViewById(R.id.iv_content_vpp);
         ivContent.getController().getSettings()
-                .setMaxZoom(6f)
-                .setDoubleTapZoom(3f);
+                .setDoubleTapZoom(10f)
+                .setMaxZoom(6f);
         ivContent.getController().enableScrollInViewPager(viewPager);
 
         if (getArguments() != null) {

@@ -1,4 +1,4 @@
-package com.app.photobook;
+package com.app.photobook.ui;
 
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -21,6 +21,8 @@ import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.app.photobook.CustomApp;
+import com.app.photobook.R;
 import com.app.photobook.dialog.CommentDialog;
 import com.app.photobook.model.Album;
 import com.app.photobook.model.AlbumImage;

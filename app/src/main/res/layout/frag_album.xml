@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/home_screen_bg"
     android:orientation="vertical"
-    tools:context="com.app.photobook.MainActivity">
+    tools:context="com.app.photobook.ui.MainActivity">
 
     <include layout="@layout/navigation_toolbar" />
 
@@ -26,6 +26,7 @@
             android:padding="10dp">
 
             <ImageView
+                android:id="@+id/ivAdd"
                 android:layout_width="24dp"
                 android:layout_height="24dp"
                 android:layout_marginLeft="10dp"

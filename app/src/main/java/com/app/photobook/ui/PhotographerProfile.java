@@ -1,4 +1,4 @@
-package com.app.photobook;
+package com.app.photobook.ui;
 
 import android.app.ProgressDialog;
 import android.arch.persistence.room.Room;
@@ -10,6 +10,8 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.app.photobook.CustomApp;
+import com.app.photobook.R;
 import com.app.photobook.model.Photographer;
 import com.app.photobook.model.User;
 import com.app.photobook.retro.RetroApi;

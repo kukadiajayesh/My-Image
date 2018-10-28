@@ -11,7 +11,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.app.photobook.CustomApp
-import com.app.photobook.MainActivity
 import com.app.photobook.R
 import com.app.photobook.model.PortfolioRes
 import com.app.photobook.model.User
@@ -19,6 +18,7 @@ import com.app.photobook.retro.RetroApi
 import com.app.photobook.tools.Constants
 import com.app.photobook.tools.MyPrefManager
 import com.app.photobook.tools.Utils
+import com.app.photobook.ui.MainActivity
 import kotlinx.android.synthetic.main.frag_portfolio_home.view.*
 import kotlinx.android.synthetic.main.navigation_toolbar.view.*
 import org.apache.http.HttpStatus
@@ -96,7 +96,7 @@ class FragHome : Fragment() {
         //myView.swipeLayout.isRefreshing = true
         myView.llProgress.visibility = View.VISIBLE
 
-        val responseBodyCall = retroApi.getPortfolio(getString(R.string.photographer_id))
+        val responseBodyCall = retroApi.portfolio
         responseBodyCall.enqueue(object : Callback<PortfolioRes> {
 
             override fun onResponse(call: Call<PortfolioRes>?, response: Response<PortfolioRes>?) {
@@ -123,7 +123,7 @@ class FragHome : Fragment() {
                         if (res.data!!.albums != null && res.data!!.albums.isNotEmpty()) {
                             var intent = Intent(Constants.ACTION_UPDATE_ALBUMS_PORTFOLIO)
                             intent.putExtra("albums", res.data!!.albums)
-                            LocalBroadcastManager.getInstance(context)
+                            LocalBroadcastManager.getInstance(activity!!)
                                     .sendBroadcast(intent)
                             hasAlbums = true
                         }
@@ -170,7 +170,7 @@ class FragHome : Fragment() {
     }
 
     fun sendBroadcast(intent: Intent) {
-        LocalBroadcastManager.getInstance(context)
+        LocalBroadcastManager.getInstance(activity!!)
                 .sendBroadcast(intent)
     }
 

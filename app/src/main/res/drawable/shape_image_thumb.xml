@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <shape xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <solid android:color="@color/icon_gray_light"></solid>
+    <solid android:color="@color/default_image_bg_color"></solid>
 
 </shape>

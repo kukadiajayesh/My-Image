@@ -9,8 +9,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.app.photobook.R
-import com.app.photobook.WebViewActivity
-import com.app.photobook.YoutubeActivity
+import com.app.photobook.ui.WebViewActivity
+import com.app.photobook.ui.YoutubeActivity
 import com.app.photobook.model.Video
 import com.app.photobook.tools.Constants
 import com.app.photobook.tools.Constants.VIMEO_THUMB_VIEW

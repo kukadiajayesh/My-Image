@@ -44,7 +44,7 @@ class FragAlbums : Fragment() {
 
         //myView.tvEmptyMsg.typeface = CustomApp.getFontNormal()
 
-        val gridLayoutManager = LinearLayoutManager(context)
+        val gridLayoutManager = LinearLayoutManager(activity!!)
         myView.recyclerView.layoutManager = gridLayoutManager
         myView.recyclerView.setHasFixedSize(true)
         return myView
@@ -53,21 +53,21 @@ class FragAlbums : Fragment() {
     private fun updateList() {
 
         if (!Utils.isOnline(activity)) {
-            ShowEmptyMessage(true, false, context.getString(R.string.message_no_internet),
-                    ContextCompat.getDrawable(context, R.drawable.ic_svg_wifi))
+            ShowEmptyMessage(true, false, activity!!!!.getString(R.string.message_no_internet),
+                    ContextCompat.getDrawable(activity!!!!, R.drawable.ic_svg_wifi)!!)
             return
         }
 
         if (albums.isEmpty()) {
-            ShowEmptyMessage(true, false, context.getString(R.string.message_empty),
-                    ContextCompat.getDrawable(context, R.drawable.ic_svg_data_no))
+            ShowEmptyMessage(true, false, activity!!.getString(R.string.message_empty),
+                    ContextCompat.getDrawable(activity!!, R.drawable.ic_svg_data_no)!!)
         } else {
-            albumAdapter = AlbumLiveAdapter(context, albums)
+            albumAdapter = AlbumLiveAdapter(activity!!, albums)
             myView.recyclerView.adapter = albumAdapter
-            myView.recyclerView.addItemDecoration(DividerItemDecoration(context))
+            myView.recyclerView.addItemDecoration(DividerItemDecoration(activity!!))
 
             ShowEmptyMessage(false, false, getString(R.string.message_empty),
-                    ContextCompat.getDrawable(context, R.drawable.ic_svg_data_no))
+                    ContextCompat.getDrawable(activity!!, R.drawable.ic_svg_data_no)!!)
         }
     }
 
@@ -92,7 +92,7 @@ class FragAlbums : Fragment() {
 
     fun setBroadCast() {
         var intentFilter = IntentFilter(Constants.ACTION_UPDATE_ALBUMS_PORTFOLIO)
-        LocalBroadcastManager.getInstance(context)
+        LocalBroadcastManager.getInstance(activity!!)
                 .registerReceiver(myBroadCast, intentFilter)
     }
 
@@ -112,7 +112,7 @@ class FragAlbums : Fragment() {
 
     override fun onDestroy() {
         super.onDestroy()
-        LocalBroadcastManager.getInstance(context)
+        LocalBroadcastManager.getInstance(activity!!)
                 .unregisterReceiver(myBroadCast)
     }
 
