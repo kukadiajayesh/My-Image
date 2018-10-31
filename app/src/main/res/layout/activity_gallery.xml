@@ -21,27 +21,44 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:background="@color/colorPrimary"
-            android:gravity="right|center_vertical"
-            android:paddingBottom="5dp"
+            android:gravity="left|center_vertical"
+            android:minWidth="120dp"
             android:paddingLeft="10dp"
             android:paddingTop="5dp"
+            android:paddingBottom="5dp"
             android:text="Total : 10"
             android:textColor="@color/white"
             android:textSize="12dp" />
 
-        <View
+        <RelativeLayout
             android:layout_width="0dp"
-            android:layout_height="1dp"
-            android:layout_weight="1" />
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center">
+
+            <TextView
+                android:id="@+id/tvViewSelected"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="?selectableItemBackground"
+                android:paddingLeft="10dp"
+                android:paddingTop="7dp"
+                android:paddingRight="10dp"
+                android:paddingBottom="7dp"
+                android:text="@string/text_view_selected"
+                android:textColor="@color/white" />
+
+        </RelativeLayout>
 
         <TextView
             android:id="@+id/tvSelectionCounter"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:gravity="right|center_vertical"
-            android:paddingBottom="5dp"
-            android:paddingRight="10dp"
+            android:minWidth="120dp"
             android:paddingTop="5dp"
+            android:paddingRight="10dp"
+            android:paddingBottom="5dp"
             android:text="Selection:  1 / 10"
             android:textColor="@color/white"
             android:textSize="12dp" />

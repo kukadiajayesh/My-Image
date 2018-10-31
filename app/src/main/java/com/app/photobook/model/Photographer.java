@@ -78,6 +78,9 @@ public class Photographer implements Parcelable {
     @SerializedName("pinterest_link")
     @Expose
     public String pinterestLink;
+    @SerializedName("youtube_link")
+    @Expose
+    public String youtubeLink;
     @SerializedName("portfolio_label")
     @Expose
     public String portfolioLabel;
@@ -115,6 +118,7 @@ public class Photographer implements Parcelable {
         instagramLink = in.readString();
         linkedinLink = in.readString();
         pinterestLink = in.readString();
+        youtubeLink = in.readString();
         portfolioLabel = in.readString();
         privateGalleryLabel = in.readString();
         googleMapDirection = in.readString();
@@ -143,6 +147,7 @@ public class Photographer implements Parcelable {
         dest.writeString(instagramLink);
         dest.writeString(linkedinLink);
         dest.writeString(pinterestLink);
+        dest.writeString(youtubeLink);
         dest.writeString(portfolioLabel);
         dest.writeString(privateGalleryLabel);
         dest.writeString(googleMapDirection);

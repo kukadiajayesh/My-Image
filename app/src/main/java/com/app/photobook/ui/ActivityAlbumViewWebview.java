@@ -1,7 +1,7 @@
 package com.app.photobook.ui;
 
+import android.graphics.Bitmap;
 import android.media.MediaPlayer;
-import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
@@ -27,9 +27,14 @@ import com.app.photobook.dialog.CommentDialog;
 import com.app.photobook.model.Album;
 import com.app.photobook.model.AlbumImage;
 import com.app.photobook.retro.RetroApi;
+import com.app.photobook.tools.BitmapUtils;
 import com.app.photobook.tools.MyPrefManager;
 import com.app.photobook.tools.SharingUtils;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.target.SimpleTarget;
+import com.bumptech.glide.request.transition.Transition;
 
+import java.io.File;
 import java.util.ArrayList;
 
 import butterknife.BindView;
@@ -95,6 +100,7 @@ public class ActivityAlbumViewWebview extends BaseActivity {
     MyPrefManager myPrefManager;
 
     boolean liveMode = false;
+    boolean isOffline = true;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -106,6 +112,7 @@ public class ActivityAlbumViewWebview extends BaseActivity {
         if (getIntent().hasExtra("album")) {
             album = getIntent().getParcelableExtra("album");
             albumImages = album.images;
+            isOffline = album.isOffline == 1;
         }
 
         myPrefManager = new MyPrefManager(this);
@@ -122,8 +129,10 @@ public class ActivityAlbumViewWebview extends BaseActivity {
         CustomApp app = (CustomApp) getApplication();
         RetroApi retroApi = app.getRetroApi();
 
-        shareText = String.format(getString(R.string.share_text), album.eventName,
-                album.eventPassword);
+        /*shareText = String.format(getString(R.string.share_text), album.eventName,
+                album.eventPassword);*/
+
+        shareText = album.shareMessage;
 
         /*shareText = "Hello Friends, View my Photobook " + album.pbName + "\n" +
                 "Download the app from: "
@@ -206,7 +215,7 @@ public class ActivityAlbumViewWebview extends BaseActivity {
                 }
 
                 ivNext.setVisibility(View.GONE);
-                if (!liveMode) {
+                if (!liveMode && album.isSharble == 1) {
                     llShare.setVisibility(View.VISIBLE);
                 }
             } else {
@@ -317,10 +326,12 @@ public class ActivityAlbumViewWebview extends BaseActivity {
 
         String extraParams = "path=file:///" + album.localPath + "&total=" + total +
                 "&width=" + album.pb_width + "&height=" + album.pb_height + "&auto_play=";
-        if (liveMode) {
+
+        if (liveMode || !isOffline) {
             extraParams = "path=" + album.path + "&total=" + total +
                     "&width=" + album.pb_width + "&height=" + album.pb_height + "&auto_play=";
         }
+
 
         if (mAutoPlay) {
 
@@ -382,30 +393,45 @@ public class ActivityAlbumViewWebview extends BaseActivity {
             R.id.ivGoogle, R.id.ivTwitter, R.id.ivMail, R.id.ivMore, R.id.ivMusic})
     public void onViewClicked(View view) {
 
-        Uri uri = null;
+        /*Uri uri = null;
         if (!liveMode) {
-            uri = Uri.parse(albumImages.get(0).localFilePath);
+            *//*uri = Uri.parse(albumImages.get(0).localFilePath);*//*
+            uri = FileProvider.getUriForFile(ActivityAlbumViewWebview.this,
+                    getPackageName() + ".fileprovider", new File(albumImages.get(0).localFilePath));  // use this version for API >= 24
+        }*/
+
+        File file = null;
+        if (!liveMode && isOffline) {
+            file = new File(albumImages.get(0).localFilePath);
         }
 
         switch (view.getId()) {
 
             case R.id.ivWhatsapp:
-                SharingUtils.sharingToSocialMedia(ActivityAlbumViewWebview.this, SharingUtils.PACKAGE_WHATSAPP, shareText, uri);
+                share(SharingUtils.PACKAGE_WHATSAPP);
                 break;
             case R.id.ivFacebook:
-                SharingUtils.sharingToSocialMedia(ActivityAlbumViewWebview.this, SharingUtils.PACKAGE_FB, shareText, uri);
+                share(SharingUtils.PACKAGE_FB);
                 break;
             case R.id.ivGoogle:
-                SharingUtils.sharingToSocialMedia(ActivityAlbumViewWebview.this, SharingUtils.PACKAGE_GPLUS, shareText, uri);
+                share(SharingUtils.PACKAGE_GPLUS);
                 break;
             case R.id.ivTwitter:
-                SharingUtils.sharingToSocialMedia(ActivityAlbumViewWebview.this, SharingUtils.PACKAGE_TWITTER, shareText, uri);
+                share(SharingUtils.PACKAGE_TWITTER);
+                /*SharingUtils.sharingToSocialMedia(ActivityAlbumViewWebview.this,
+                        SharingUtils.PACKAGE_TWITTER, shareText, file);*/
                 break;
             case R.id.ivMail:
-                SharingUtils.sharingToMail(ActivityAlbumViewWebview.this, shareText, uri);
+                share(SharingUtils.PACKAGE_MAIL);
+                //SharingUtils.sharingToMail(ActivityAlbumViewWebview.this, shareText, file);
                 break;
             case R.id.ivMore:
-                SharingUtils.shareAlbum(ActivityAlbumViewWebview.this, shareText, uri);
+                share(SharingUtils.PACKAGE_OTHER);
+                /*try {
+                    SharingUtils.shareAlbum(ActivityAlbumViewWebview.this, shareText, file);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }*/
                 break;
             case R.id.ivPrev:
                 webview.loadUrl("javascript:ap_previous()");
@@ -426,5 +452,47 @@ public class ActivityAlbumViewWebview extends BaseActivity {
         }
     }
 
+    void share(final String type) {
 
+        File file;
+        if (!liveMode && isOffline) {
+            try {
+                file = new File(albumImages.get(0).localFilePath);
+                shareOffline(type, file);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        } else {
+            Glide.with(this)
+                    .asBitmap()
+                    .load(album.images.get(0).url)
+                    .into(new SimpleTarget<Bitmap>() {
+                        @Override
+                        public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                            File file = BitmapUtils.getBitmapFromDrawable(ActivityAlbumViewWebview.this, resource);
+                            try {
+                                shareOffline(type, file);
+                            } catch (Exception e) {
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+        }
+
+    }
+
+    private void shareOffline(String type, File file) throws Exception {
+        if (type.equals(SharingUtils.PACKAGE_MAIL)) {
+            SharingUtils.sharingToMail(ActivityAlbumViewWebview.this, shareText, file);
+        } else if (type.equals(SharingUtils.PACKAGE_OTHER)) {
+            SharingUtils.shareAlbum(ActivityAlbumViewWebview.this, shareText, file);
+        } else {
+            try {
+                SharingUtils.sharingToSocialMedia(ActivityAlbumViewWebview.this,
+                        type, shareText, file);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+    }
 }

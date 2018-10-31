@@ -24,6 +24,7 @@ import java.text.NumberFormat;
 
 public class FileUtils {
 
+    public static String FOLDER_IMAGES = ".albums";
 
     public static String getDefaultFolder(Context context) {
 
@@ -229,7 +230,6 @@ public class FileUtils {
 
         fileOrDirectory.delete();
     }
-
 
 
 }

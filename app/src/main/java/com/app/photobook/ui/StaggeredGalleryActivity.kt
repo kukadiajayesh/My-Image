@@ -7,6 +7,7 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.Bundle
 import android.os.Handler
+import android.os.SystemClock
 import android.support.v4.content.LocalBroadcastManager
 import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
@@ -15,6 +16,7 @@ import android.util.Log
 import android.view.Menu
 import android.view.MenuItem
 import android.view.View
+import android.widget.ImageView
 import android.widget.LinearLayout
 import android.widget.Toast
 import com.app.photobook.CustomApp
@@ -29,7 +31,9 @@ import com.app.photobook.retro.RetroApi
 import com.app.photobook.room.RoomDatabaseClass
 import com.app.photobook.tools.Constants
 import com.app.photobook.tools.MyPrefManager
+import com.app.photobook.tools.ShowcaseUtils
 import com.app.photobook.tools.Utils
+import com.wooplr.spotlight.utils.SpotlightListener
 import kotlinx.android.synthetic.main.activity_gallery.*
 import kotlinx.android.synthetic.main.navigation_toolbar.*
 import okhttp3.ResponseBody
@@ -46,6 +50,7 @@ class StaggeredGalleryActivity : AppCompatActivity() {
     internal lateinit var progressDialog: ProgressDialog
     internal lateinit var album: Album
     internal lateinit var albumImages: ArrayList<AlbumImage>
+    internal var albumImagesTemp = ArrayList<AlbumImage>()
 
     internal lateinit var myPrefManager: MyPrefManager
     internal var user: User? = null
@@ -54,11 +59,17 @@ class StaggeredGalleryActivity : AppCompatActivity() {
     var hasSelectionChanged = false
     var showMenu = false
     var liveMode = false
+    var isOffline = true
 
     internal lateinit var commentDialog: CommentDialog
     internal lateinit var roomDatabaseClass: RoomDatabaseClass
     internal lateinit var photoSelectionUtils: PhotoSelectionUtils
     var totalSelected = 0
+    var viewSelected = false
+    internal var ivTitleIcon: ImageView? = null
+
+    private val MIN_CLICK_INTERVAL: Long = 400
+    private var mLastClickTime: Long = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -68,8 +79,11 @@ class StaggeredGalleryActivity : AppCompatActivity() {
         if (intent.hasExtra("album")) {
             album = intent.getParcelableExtra("album")
             albumImages = album.images
+            albumImagesTemp.addAll(albumImages)
 
             liveMode = intent.getBooleanExtra("live_mode", false)
+            isOffline = album.isOffline == 1
+
             //Check whether to any images selected or not
             checkMenuVisibility()
         }
@@ -94,10 +108,12 @@ class StaggeredGalleryActivity : AppCompatActivity() {
 
         if (liveMode) {
             llSelectionFooter.visibility = View.GONE
+            tvViewSelected.visibility = View.GONE
         }
 
         if (album.eventType != Constants.GALLERY_TYPE_SELECTION) {
-            tvSelectionCounter.visibility = View.GONE
+            tvSelectionCounter.visibility = View.INVISIBLE
+            tvViewSelected.visibility = View.GONE
         }
 
         tvTotal.text = "Total : " + album.images.size.toString()
@@ -105,6 +121,27 @@ class StaggeredGalleryActivity : AppCompatActivity() {
         commentDialog = CommentDialog(this, retroApi, dialogLayout as LinearLayout)
         roomDatabaseClass = CustomApp.getRoomDatabaseClass()
         photoSelectionUtils = PhotoSelectionUtils(this, roomDatabaseClass, album, albumImages)
+
+        tvViewSelected.setOnClickListener(onClick)
+
+        if (!liveMode) {
+            if (album.eventType == Constants.GALLERY_TYPE_SELECTION) {
+                tvViewSelected.postDelayed({
+                    with(ShowcaseUtils(this)) {
+                        showInGallerySelectionScreen(tvViewSelected, spotlightListener)
+                    }
+                }, 1000)
+            }
+        }
+    }
+
+    var spotlightListener = SpotlightListener {
+
+        if (it == ShowcaseUtils.UNIQUE_ID_GALLERY_SELECTION) {
+            if (ivTitleIcon != null) {
+                ShowcaseUtils(this).showInGallerySubmitScreen(ivTitleIcon!!)
+            }
+        }
     }
 
     private fun sdfsd() {
@@ -145,11 +182,13 @@ class StaggeredGalleryActivity : AppCompatActivity() {
     }
 
     private fun initializeActionBar() {
-        if (liveMode) {
+        /*if (liveMode) {
             toolbar!!.title = album.eventName + " (" + album.images.size + ")"
         } else {
-            toolbar!!.title = album.eventName
+
         }
+*/
+        toolbar!!.title = album.eventName
         //toolbar!!.title = album.eventName + " (" + album.images.size + ")"
         setSupportActionBar(toolbar)
         supportActionBar!!.setDisplayHomeAsUpEnabled(true)
@@ -182,6 +221,42 @@ class StaggeredGalleryActivity : AppCompatActivity() {
 
     }
 
+    fun validClick(): Boolean {
+        val currentClickTime = SystemClock.uptimeMillis()
+        val elapsedTime = currentClickTime - mLastClickTime
+
+        if (elapsedTime <= MIN_CLICK_INTERVAL)
+            return false
+
+        mLastClickTime = currentClickTime
+        return true
+    }
+
+    var onClick = View.OnClickListener { view ->
+        when (view.id) {
+            R.id.tvViewSelected -> {
+
+                if (!validClick()) {
+                    return@OnClickListener
+                }
+
+                albumImages.clear()
+
+                if (viewSelected) {
+                    tvViewSelected.setText(R.string.text_view_selected)
+                    albumImages.addAll(albumImagesTemp)
+                } else {
+                    tvViewSelected.setText(R.string.text_view_all)
+                    albumImages.addAll(albumImagesTemp.filter {
+                        it.selected
+                    } as ArrayList<AlbumImage>)
+                }
+
+                viewSelected = !viewSelected
+                galleryAdapter!!.notifyDataSetChanged()
+            }
+        }
+    }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         /*if (showMenu) {
@@ -195,6 +270,8 @@ class StaggeredGalleryActivity : AppCompatActivity() {
             updateCounter()
             //toolbar!!.title = album.eventName + " (" + totalSelected.toString() + " / " + album.images.size + ")"
             tvSelectionCounter.text = "Selection:  " + totalSelected.toString() + " / " + album.eventMaximumSelect
+
+            ivTitleIcon = menuSubmit.actionView.findViewById(R.id.ivIcon)
         }
 
         return super.onCreateOptionsMenu(menu)
@@ -214,7 +291,6 @@ class StaggeredGalleryActivity : AppCompatActivity() {
     fun promptSubmit(ids: String) {
         val builder1 = AlertDialog.Builder(this@StaggeredGalleryActivity)
         builder1.setMessage("Are you sure want to submit the selection?")
-        builder1.setTitle(getString(R.string.app_name))
         builder1.setCancelable(false)
         builder1.setPositiveButton(
                 "Submit") { dialog, id ->
@@ -259,8 +335,7 @@ class StaggeredGalleryActivity : AppCompatActivity() {
 
                         }
 
-                        Utils.showDialog(this@StaggeredGalleryActivity, getString(R.string.app_name),
-                                msg, null)
+                        Utils.showDialog(this@StaggeredGalleryActivity, "", msg, null)
                         //Toast.makeText(this@StaggeredGalleryActivity, msg, Toast.LENGTH_LONG).show()
 
                     } else {
@@ -320,7 +395,6 @@ class StaggeredGalleryActivity : AppCompatActivity() {
             }
         }
         )
-
     }
 
     private fun updateMaxEventSelectionLimit(maxLimit: Int) {

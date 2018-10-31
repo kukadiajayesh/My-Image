@@ -120,6 +120,7 @@ public class Constants {
     public static final String TITLE_INSTAGRAM = "www.instagram.com/%s";
     public static final String TITLE_LINKEDIN = "www.in.linkedin.com/%s";
     public static final String TITLE_PINTEREST = "www.pinterest.com/%s";
+    public static final String TITLE_YOUTUBE = "www.youtube.com/%s";
     public static final String TITLE_GOOGLEMAP = "www.maps.google.com/%s";
 
 

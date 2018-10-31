@@ -7,7 +7,6 @@ import android.content.Context
 import android.content.Intent
 import android.content.IntentFilter
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.graphics.drawable.Drawable
 import android.os.AsyncTask
 import android.os.Bundle
@@ -27,25 +26,18 @@ import com.app.photobook.CustomApp
 import com.app.photobook.R
 import com.app.photobook.adapter.AlbumAdapter
 import com.app.photobook.helper.ImageDownloadAndSave
-import com.app.photobook.model.Album
-import com.app.photobook.model.AlbumImage
-import com.app.photobook.model.AlbumRes
-import com.app.photobook.model.User
+import com.app.photobook.model.*
 import com.app.photobook.retro.RetroApi
 import com.app.photobook.room.RoomDatabaseClass
-import com.app.photobook.tools.Constants
-import com.app.photobook.tools.FileUtils
-import com.app.photobook.tools.MyPrefManager
-import com.app.photobook.tools.Utils
+import com.app.photobook.tools.*
 import com.app.photobook.ui.MainActivity
-import com.wooplr.spotlight.SpotlightView
 import kotlinx.android.synthetic.main.frag_album.view.*
 import kotlinx.android.synthetic.main.navigation_toolbar.view.*
 import kotlinx.android.synthetic.main.view_empty.view.*
+import org.apache.http.HttpStatus
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
-import java.io.File
 import java.util.*
 
 class FragAlbumHome : Fragment() {
@@ -103,7 +95,7 @@ class FragAlbumHome : Fragment() {
         progressDialog.setCancelable(true)
         progressDialog.setOnCancelListener {
 
-            if (downloadedImage != album.images.size) {
+            if (downloadedImage != album.images.size && saveArrayList.size > 0) {
 
                 val current = downloadedImage - 1
                 for (i in current until saveArrayList.size) {
@@ -127,26 +119,12 @@ class FragAlbumHome : Fragment() {
 
     fun showHelp() {
 
-        SpotlightView.Builder(activity)
-                .introAnimationDuration(400)
-                .enableRevealAnimation(true)
-                .performClick(true)
-                .fadeinTextDuration(400)
-                .headingTvColor(Color.parseColor("#eb273f"))
-                .headingTvSize(32)
-                .headingTvText(getString(R.string.showcase_add_button_title))
-                .subHeadingTvColor(Color.parseColor("#ffffff"))
-                .subHeadingTvSize(16)
-                .subHeadingTvText(getString(R.string.showcase_add_button))
-                .maskColor(Color.parseColor("#dc000000"))
-                .target(view!!.ivAdd)
-                .lineAnimDuration(400)
-                .lineAndArcColor(Color.parseColor("#eb273f"))
-                .dismissOnTouch(true)
-                .dismissOnBackPress(true)
-                .enableDismissAfterShown(true)
-                .usageId("2") //UNIQUE ID
-                .show()
+        if (isDetached) {
+            return
+        }
+
+        ShowcaseUtils(activity)
+                .showInAlbumAddScreen(view!!.ivAdd)
     }
 
     internal var downloadListener: ImageDownloadAndSave.DownloadListener = object : ImageDownloadAndSave.DownloadListener {
@@ -191,10 +169,20 @@ class FragAlbumHome : Fragment() {
                 var albumRes = response.body()
 
                 if (albumRes.error == 0) {
-                    alertDialog.dismiss()
+                    if (alertDialog != null) {
+                        alertDialog.dismiss()
+                    }
+
                     this@FragAlbumHome.album = albumRes.album
-                    album.localPath = FileUtils.getDefaultFolder(activity) + album.id + "/"
-                    startAlbumFetchProcess()
+                    album.localPath = album.getAlbumPath(activity, true).absolutePath + "/"
+
+                    //1 to offline gallery
+                    if (album.isOffline == 1) {
+                        offlinePrompt()
+                    } else {
+                        downloadAlbum(false)
+                    }
+
                 } else {
                     Utils.showDialog(activity, albumRes.message, null)
                     progressDialog.dismiss()
@@ -215,6 +203,23 @@ class FragAlbumHome : Fragment() {
 
             progressDialog.dismiss()
         }
+    }
+
+    fun offlinePrompt() {
+        AlertDialog.Builder(activity)
+                .setTitle("")
+                .setMessage(getString(R.string.dialog_msg_offline))
+                .setPositiveButton("Yes") { dialog, which ->
+                    downloadAlbum(true)
+                }
+                .setNegativeButton("No") { dialog, which ->
+                    downloadAlbum(false)
+                }
+                .show()
+    }
+
+    fun downloadAlbum(isOffline: Boolean) {
+        startAlbumFetchProcess(isOffline)
     }
 
     internal var onClickListener: View.OnClickListener = View.OnClickListener { view ->
@@ -267,7 +272,43 @@ class FragAlbumHome : Fragment() {
             view!!.recyclerView!!.layoutManager = LinearLayoutManager(activity)
             albumAdapter = AlbumAdapter(activity!!, this@FragAlbumHome, album)
             view!!.recyclerView!!.adapter = albumAdapter
+
+            checkAlbumsIsActive()
         }
+    }
+
+    fun onDelete(album: Album, pos: Int) {
+
+        AlertDialog.Builder(context!!)
+                .setMessage("Do you want to delete this gallery?")
+                .setPositiveButton("Yes") { dialog, which ->
+
+                    //Remove offline folder
+                    deleteAlbumAtPos(pos, album)
+                }
+                .setNegativeButton("No", null)
+                .show()
+    }
+
+    private fun deleteAlbumAtPos(pos: Int, album: Album?) {
+
+        var myAlbum = album
+        if (album == null) {
+            myAlbum = albums[pos]
+        }
+
+        var albumPath = myAlbum!!.getAlbumPath(activity, false)
+        if (albumPath.exists()) {
+            var sucess = albumPath.deleteRecursively()
+            Log.e(TAG, "Delete album folder: " + sucess.toString())
+        }
+
+        //Delete All albums with images
+        roomDatabaseClass.daoAlbumImage().DeleteAll(myAlbum.images)
+        roomDatabaseClass.daoAlbum().Delete(myAlbum)
+
+        albums.remove(myAlbum)
+        albumAdapter.notifyItemRemoved(pos)
     }
 
     internal fun fetchAlbum() {
@@ -298,9 +339,7 @@ class FragAlbumHome : Fragment() {
     }
 
     private fun removeLocalAlbumFiles(album: Album) {
-        val sdCard = FileUtils.getDefaultFolder(activity) + album.id
-        val myDir = File(sdCard)
-        Log.e(TAG, "path: $myDir")
+        var myDir = album.getAlbumPath(activity, false)
         if (myDir.exists()) {
             FileUtils.deleteRecursive(myDir)
         }
@@ -321,14 +360,21 @@ class FragAlbumHome : Fragment() {
         responseBodyCall.enqueue(responseBodyCallback)
     }
 
-    private fun startAlbumFetchProcess() {
+    private fun startAlbumFetchProcess(isOffline: Boolean) {
 
+        this@FragAlbumHome.album.isOffline = if (isOffline) 1 else 2
         val albumss = roomDatabaseClass.daoAlbum().getAlbumId(album.id)
         if (albumss.size == 0) {
-            startDownloadImages()
+            if (isOffline)
+                startDownloadImages()
+            else {
+                progressDialog.dismiss()
+                insertAlbumInDb()
+            }
+
         } else {
             progressDialog.dismiss()
-            Toast.makeText(activity, "Album already added !", Toast.LENGTH_LONG).show()
+            Toast.makeText(activity, "This Album is already added", Toast.LENGTH_LONG).show()
         }
     }
 
@@ -341,12 +387,10 @@ class FragAlbumHome : Fragment() {
 
         for ((pos, albumImage) in album.images.withIndex()) {
 
-            val imageDownloadAndSave = ImageDownloadAndSave(activity,
-                    downloadListener)
+            val imageDownloadAndSave = ImageDownloadAndSave(activity, album.localPath, downloadListener)
 
             imageDownloadAndSave.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR,
-                    albumImage.url, pos.toString() + "", album.id.toString() + "",
-                    (pos + 1).toString() + ".jpg")
+                    albumImage.url, pos.toString() + "", (pos + 1).toString() + ".jpg")
 
             /*if (pos == 1) {
                 imageDownloadAndSave.executeOnExecutor(AsyncTask.SERIAL_EXECUTOR,
@@ -402,6 +446,92 @@ class FragAlbumHome : Fragment() {
         }
     }
 
+    /**
+     * Check every pins whether every gallery is active or not
+     */
+    private fun checkAlbumsIsActive() {
+
+        if (!Utils.isOnline(activity)) return
+        if (albums.isEmpty()) return
+
+        //Make command separate pins
+        var pins = ""
+        albums.forEach {
+            pins += it.eventPassword + ","
+        }
+        pins = pins.substring(0, pins.length - 1)
+
+        val responseBodyCall = retroApi.checkIsAlbumActive(pins)
+        responseBodyCall.enqueue(object : retrofit2.Callback<AlbumActiveRes> {
+            override fun onResponse(call: Call<AlbumActiveRes>, response: Response<AlbumActiveRes>) {
+                try {
+                    if (response.code() == HttpStatus.SC_OK) {
+
+                        var res = response.body()
+                        if (res.error == 0) {
+
+                            var posDelete = ArrayList<Int>()
+
+                            //get inactive album's pos
+                            res.data.forEach { item ->
+                                for ((index, value) in albums.withIndex()) {
+                                    if (value.id == item.id) {
+                                        if (item.isActive == 0) {
+                                            posDelete.add(index)
+                                        }
+                                    }
+                                }
+                            }
+
+
+                            if (posDelete.isNotEmpty()) {
+
+                                //posDelete.sort
+                                //Collections.sort(posDelete, Collections.reverseOrder())
+                                posDelete.sortDescending()
+
+                                //var albumsToDeleteMsg = ""
+                                if (posDelete.isNotEmpty()) {
+
+                                    //for (i in posDelete.size - 1 downTo 0) {
+                                    for (i in posDelete.indices) {
+                                        var deletePos = posDelete[i]
+                                        //var album = albums[deletePos]
+                                        //albumsToDeleteMsg += (i + 1).toString() + ". " + album.eventName + "\n\n"
+                                        deleteAlbumAtPos(deletePos, null)
+                                    }
+                                }
+                                //albumsToDeleteMsg = albumsToDeleteMsg.trim()
+
+                                AlertDialog.Builder(activity)
+                                        //.setTitle("These galleries are about to delete")
+                                        .setMessage(res.message)
+                                        .setPositiveButton("Ok", null)
+                                        .show()
+                            }
+                        } else {
+                            Toast.makeText(activity, res.message, Toast.LENGTH_LONG).show()
+                        }
+
+                        //Toast.makeText(this@StaggeredGalleryActivity, msg, Toast.LENGTH_LONG).show()
+
+                    } else {
+                        var res = response.errorBody().string()
+                        Log.e("", res)
+                    }
+                } catch (e: Exception) {
+                    e.printStackTrace()
+                }
+            }
+
+            override fun onFailure(call: Call<AlbumActiveRes>?, t: Throwable?) {
+                t!!.printStackTrace()
+            }
+        }
+        )
+
+    }
+
     override fun onDetach() {
         super.onDetach()
         isDetached = true
@@ -422,11 +552,10 @@ class FragAlbumHome : Fragment() {
 
         val builder = AlertDialog.Builder(activity!!)
         builder.setView(viewDialog)
-        builder.setTitle("Add Album")
+        builder.setTitle(getString(R.string.dialog_title_add_gallery))
         alertDialog = builder.create()
         alertDialog.show()
     }
-
 
     internal fun GetAllPermission(): Boolean {
 

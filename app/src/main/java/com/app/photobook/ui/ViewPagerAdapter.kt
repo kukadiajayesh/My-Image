@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.alexvasilkov.gestures.Settings
 import com.alexvasilkov.gestures.commons.RecyclePagerAdapter
 import com.alexvasilkov.gestures.views.GestureImageView
+import com.app.photobook.model.Album
 import com.app.photobook.model.AlbumImage
 import com.bumptech.glide.Glide
 import com.bumptech.glide.load.engine.DiskCacheStrategy
@@ -16,7 +17,7 @@ import com.bumptech.glide.request.target.Target
 import java.io.File
 
 
-class ViewPagerAdapter(var viewPager: ViewPager, var albumImages: List<AlbumImage>, var liveMode: Boolean)
+class ViewPagerAdapter(var viewPager: ViewPager, var album: Album, var albumImages: List<AlbumImage>, var liveMode: Boolean)
     : RecyclePagerAdapter<ViewPagerAdapter.ViewHolder>() {
 
     override fun onCreateViewHolder(container: ViewGroup): ViewHolder {
@@ -60,13 +61,20 @@ class ViewPagerAdapter(var viewPager: ViewPager, var albumImages: List<AlbumImag
                     .override(Target.SIZE_ORIGINAL)
                     .dontTransform()
 
-            Glide.with(holder.image)
-                    .load(Uri.fromFile(File(path)))
-                    .apply(options)
-                    //.thumbnail(thumbRequest)
-                    .into(holder.image)
+            if (album.isOffline == 1) {
+                Glide.with(holder.image)
+                        .load(Uri.fromFile(File(path)))
+                        .apply(options)
+                        //.thumbnail(thumbRequest)
+                        .into(holder.image)
+            } else {
+                Glide.with(holder.image)
+                        .load(albumImages[position].url)
+                        .apply(options)
+                        //.thumbnail(thumbRequest)
+                        .into(holder.image)
+            }
         }
-
 
         /*val painting = paintings[position]
         GlideHelper.loadFull(holder.image, painting.imageId, painting.thumbId)*/

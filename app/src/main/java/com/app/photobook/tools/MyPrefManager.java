@@ -27,6 +27,7 @@ public class MyPrefManager {
     public static final String KEY_USER_TOKEN = "token";
     public static final String KEY_MUSIC_STATUS = "music";
     private static final String SET_UPDATE = "set_later_version_code";
+    private static final String SET_MAINTENANCE_ID = "maintenance_id";
 
     // Constructor
     public MyPrefManager(Context context) {
@@ -106,6 +107,16 @@ public class MyPrefManager {
 
     public int getLaterVersion() {
         return pref.getInt(SET_UPDATE, 0);
+    }
+
+    public void setMaintenanceId(int version) {
+        editor = pref.edit();
+        editor.putInt(SET_MAINTENANCE_ID, version);
+        editor.commit();
+    }
+
+    public int getMaintenanceId() {
+        return pref.getInt(SET_MAINTENANCE_ID, 0);
     }
 
     public SharedPreferences getPref() {

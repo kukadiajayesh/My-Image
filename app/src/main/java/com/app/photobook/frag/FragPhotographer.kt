@@ -53,6 +53,7 @@ class FragPhotographer : Fragment() {
         view.llLinkedIn.setOnClickListener(onClick)
         view.llTwitter.setOnClickListener(onClick)
         view.llPintrest.setOnClickListener(onClick)
+        view.llYoutube.setOnClickListener(onClick)
         view.llLocation.setOnClickListener(onClick)
         view.fabInquiry.setOnClickListener(onClick)
 
@@ -99,6 +100,9 @@ class FragPhotographer : Fragment() {
             }
             R.id.llPintrest -> {
                 openLink(photographer.pinterestLink)
+            }
+            R.id.llYoutube -> {
+                openLink(photographer.youtubeLink)
             }
             R.id.llLocation -> {
                 openLink(photographer.googleMapDirection)
@@ -220,7 +224,6 @@ class FragPhotographer : Fragment() {
         } else {
             view.viewWebSite.visibility = View.GONE
             view.llWebSite.visibility = View.GONE
-            view.tvWebsite.text = "(not available)"
         }
 
         photographer.businessName = photographer.businessName.replace(" ", "")
@@ -229,7 +232,6 @@ class FragPhotographer : Fragment() {
         } else {
             view.viewGoogle.visibility = View.GONE
             view.llGoogle.visibility = View.GONE
-            view.tvSocialGoogle.text = "(not available)"
         }
 
         if (!TextUtils.isEmpty(photographer.facebookLink)) {
@@ -237,7 +239,6 @@ class FragPhotographer : Fragment() {
         } else {
             view.viewFacebook.visibility = View.GONE
             view.llFacebook.visibility = View.GONE
-            view.tvSocialFacebook.text = "(not available)"
         }
 
         if (!TextUtils.isEmpty(photographer.instagramLink)) {
@@ -245,7 +246,6 @@ class FragPhotographer : Fragment() {
         } else {
             view.viewInstagram.visibility = View.GONE
             view.llInstagram.visibility = View.GONE
-            view.tvSocialInstagram.text = "(not available)"
         }
 
         if (!TextUtils.isEmpty(photographer.twitterLink)) {
@@ -253,7 +253,6 @@ class FragPhotographer : Fragment() {
         } else {
             view.viewTwitter.visibility = View.GONE
             view.llTwitter.visibility = View.GONE
-            view.tvSocialTwitter.text = "(not available)"
         }
 
         if (!TextUtils.isEmpty(photographer.linkedinLink)) {
@@ -261,7 +260,6 @@ class FragPhotographer : Fragment() {
         } else {
             view.viewLinkedIn.visibility = View.GONE
             view.llLinkedIn.visibility = View.GONE
-            view.tvLinkedIn.text = "(not available)"
         }
 
         if (!TextUtils.isEmpty(photographer.pinterestLink)) {
@@ -269,7 +267,13 @@ class FragPhotographer : Fragment() {
         } else {
             view.viewPintreset.visibility = View.GONE
             view.llPintrest.visibility = View.GONE
-            view.tvSocialPintreset.text = "(not available)"
+        }
+
+        if (!TextUtils.isEmpty(photographer.youtubeLink)) {
+            view.tvSocialYoutube.text = String.format(Constants.TITLE_YOUTUBE, photographer.businessName)
+        } else {
+            view.viewYoutube.visibility = View.GONE
+            view.llYoutube.visibility = View.GONE
         }
 
         if (!TextUtils.isEmpty(photographer.googleMapDirection)) {
@@ -277,7 +281,6 @@ class FragPhotographer : Fragment() {
         } else {
             view.viewLocation.visibility = View.GONE
             view.llLocation.visibility = View.GONE
-            view.tvLocation.text = "(not available)"
         }
     }
 

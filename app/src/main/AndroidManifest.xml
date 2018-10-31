@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     package="com.app.photobook">
 
     <!--<uses-permission android:name="android.permission.READ_CONTACTS"></uses-permission>-->
@@ -23,7 +24,19 @@
         android:icon="@drawable/app_logo"
         android:label="@string/app_name"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme.brown">
+        android:theme="@style/AppTheme.brown"
+        tools:ignore="GoogleAppIndexingWarning">
+
+        <!-- make sure within the application tag, otherwise app will crash with XmlResourceParser errors -->
+        <provider
+            android:name="android.support.v4.content.FileProvider"
+            android:authorities="${applicationId}.provider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/fileprovider" />
+        </provider>
 
         <activity
             android:name=".SplashActivity"

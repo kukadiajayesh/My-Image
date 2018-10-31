@@ -3,13 +3,16 @@ package com.app.photobook.model;
 import android.arch.persistence.room.Entity;
 import android.arch.persistence.room.Ignore;
 import android.arch.persistence.room.PrimaryKey;
+import android.content.Context;
 import android.os.Parcel;
 import android.os.Parcelable;
 import android.support.annotation.NonNull;
 
+import com.app.photobook.tools.FileUtils;
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -48,6 +51,18 @@ public class Album implements Parcelable {
     @SerializedName("event_mail")
     @Expose
     public String eventMail;
+    @SerializedName("event_is_share")
+    @Expose
+    public Integer isSharble;
+    @SerializedName("event_is_offline")
+    @Expose
+    public Integer isOffline = 1;
+    @SerializedName("event_is_active")
+    @Expose
+    public Integer isActive;
+    @SerializedName("share_message")
+    @Expose
+    public String shareMessage;
     @SerializedName("event_maximum_select")
     @Expose
     public Integer eventMaximumSelect;
@@ -105,6 +120,22 @@ public class Album implements Parcelable {
         eventEndDate = in.readString();
         eventMail = in.readString();
         if (in.readByte() == 0) {
+            isSharble = null;
+        } else {
+            isSharble = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            isOffline = null;
+        } else {
+            isOffline = in.readInt();
+        }
+        if (in.readByte() == 0) {
+            isActive = null;
+        } else {
+            isActive = in.readInt();
+        }
+        shareMessage = in.readString();
+        if (in.readByte() == 0) {
             eventMaximumSelect = null;
         } else {
             eventMaximumSelect = in.readInt();
@@ -149,6 +180,25 @@ public class Album implements Parcelable {
         dest.writeString(eventStartDate);
         dest.writeString(eventEndDate);
         dest.writeString(eventMail);
+        if (isSharble == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(isSharble);
+        }
+        if (isOffline == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(isOffline);
+        }
+        if (isActive == null) {
+            dest.writeByte((byte) 0);
+        } else {
+            dest.writeByte((byte) 1);
+            dest.writeInt(isActive);
+        }
+        dest.writeString(shareMessage);
         if (eventMaximumSelect == null) {
             dest.writeByte((byte) 0);
         } else {
@@ -192,6 +242,30 @@ public class Album implements Parcelable {
             return new Album[size];
         }
     };
+
+    private File getAlbumPathNew(Context context, boolean create) {
+        String BASE_CACHE_FOLDER = FileUtils.getDefaultFolder(context);
+        File BASE_IMAGE_PATH = new File(BASE_CACHE_FOLDER, FileUtils.FOLDER_IMAGES +
+                File.separator + id);
+        if (!BASE_IMAGE_PATH.exists() && create) {
+            BASE_IMAGE_PATH.mkdirs();
+        }
+        return BASE_IMAGE_PATH;
+    }
+
+    private File getAlbumPathOld(Context context) {
+        String BASE_CACHE_FOLDER = FileUtils.getDefaultFolder(context);
+        return new File(BASE_CACHE_FOLDER + id);
+    }
+
+    public File getAlbumPath(Context context, boolean create) {
+        File newPath = getAlbumPathNew(context, create);
+        if (newPath.exists()) {
+            return newPath;
+        }
+        return getAlbumPathOld(context);
+    }
+
 }
 
 

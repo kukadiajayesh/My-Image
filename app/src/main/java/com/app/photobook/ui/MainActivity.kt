@@ -3,7 +3,6 @@ package com.app.photobook.ui
 import android.Manifest
 import android.content.Intent
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
@@ -13,7 +12,6 @@ import android.support.v4.app.FragmentManager
 import android.support.v7.app.AlertDialog
 import android.text.TextUtils
 import android.view.View
-import android.view.animation.DecelerateInterpolator
 import android.widget.Toast
 import com.app.photobook.CustomApp
 import com.app.photobook.R
@@ -23,12 +21,8 @@ import com.app.photobook.frag.Portfolio.FragHome
 import com.app.photobook.model.Photographer
 import com.app.photobook.room.RoomDatabaseClass
 import com.app.photobook.tools.AppUpdateUtils
+import com.app.photobook.tools.ShowcaseUtils
 import com.app.photobook.tools.Utils
-import com.takusemba.spotlight.OnTargetStateChangedListener
-import com.takusemba.spotlight.Spotlight
-import com.takusemba.spotlight.shape.Circle
-import com.takusemba.spotlight.target.SimpleTarget
-import com.wooplr.spotlight.SpotlightView
 import kotlinx.android.synthetic.main.activity_main.*
 
 
@@ -65,7 +59,8 @@ class MainActivity : BaseActivity() {
         }, 500)*/
 
         flAlbums.postDelayed({
-            showHelp()
+            ShowcaseUtils(this)
+                    .showInHomeScreen(findViewById(R.id.flAlbums))
         }, 1000)
 
     }
@@ -216,7 +211,7 @@ class MainActivity : BaseActivity() {
 
     fun showHelp2() {
 
-        val simpleTarget = SimpleTarget.Builder(this)
+        /*val simpleTarget = SimpleTarget.Builder(this)
                 .setPoint(flAlbums)
                 .setShape(Circle(200f))
                 .setTitle("the title")
@@ -236,31 +231,7 @@ class MainActivity : BaseActivity() {
                 .setAnimation(DecelerateInterpolator(2f))
                 .setTargets(simpleTarget)
                 .setClosedOnTouchedOutside(true)
-                .start()
-    }
-
-    fun showHelp() {
-
-        SpotlightView.Builder(this)
-                .introAnimationDuration(400)
-                .enableRevealAnimation(true)
-                .performClick(true)
-                .fadeinTextDuration(400)
-                .headingTvColor(Color.parseColor("#eb273f"))
-                .headingTvSize(32)
-                .headingTvText(getString(R.string.showcase_add_button_title))
-                .subHeadingTvColor(Color.parseColor("#ffffff"))
-                .subHeadingTvSize(16)
-                .subHeadingTvText(getString(R.string.showcase_add_button))
-                .maskColor(Color.parseColor("#dc000000"))
-                .target(findViewById(R.id.flAlbums))
-                .lineAnimDuration(400)
-                .lineAndArcColor(Color.parseColor("#eb273f"))
-                .dismissOnTouch(true)
-                .dismissOnBackPress(true)
-                .enableDismissAfterShown(true)
-                .usageId("1") //UNIQUE ID
-                .show()
+                .start()*/
     }
 
     override fun onBackPressed() {

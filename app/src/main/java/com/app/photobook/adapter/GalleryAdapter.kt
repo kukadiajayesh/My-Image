@@ -66,7 +66,6 @@ class GalleryAdapter(private val staggeredGalleryActivity: StaggeredGalleryActiv
     override fun onBindViewHolder(holder: RecyclerView.ViewHolder, position: Int) {
 
         val albumImage = albumImages!![position]
-        val path = albumImage.localFilePath
 
         if (albumImage.holderHeight == 0) {
             albumImage.holderHeight = getRandomIntInRange(mHeightMax, mHeighMin)
@@ -74,18 +73,8 @@ class GalleryAdapter(private val staggeredGalleryActivity: StaggeredGalleryActiv
         }
         holder.itemView.layoutParams.height = albumImage.holderHeight
 
-        //Log.e(TAG, "Imageview Width: " + holder.itemView.album_image.width.toString())
-
-
-        /*if (albumImage.imageHeight != 0) {
-            holder.itemView.album_image.layoutParams.height = albumImage.imageHeight
-        }*/
-        //holder.itemView.album_image.layoutParams.height = 0
-        //holder.itemView.album_image.setImageBitmap(null)
-
-        //holder.itemView.album_image.layoutParams.height = 200
-
-        if (album.eventType == Constants.GALLERY_TYPE_SELECTION && !staggeredGalleryActivity.liveMode) {
+        if (album.eventType == Constants.GALLERY_TYPE_SELECTION
+                && !staggeredGalleryActivity.liveMode) {
             holder.itemView.chk.visibility = View.VISIBLE
             holder.itemView.viewShadow.visibility = View.VISIBLE
         } else {
@@ -94,7 +83,6 @@ class GalleryAdapter(private val staggeredGalleryActivity: StaggeredGalleryActiv
         }
         holder.itemView.ivShare.visibility = View.GONE
         holder.itemView.ivComment.visibility = View.GONE
-
 
         val customListener = CustomListener(position, holder)
         holder.itemView.setOnClickListener(customListener)
@@ -121,52 +109,46 @@ class GalleryAdapter(private val staggeredGalleryActivity: StaggeredGalleryActiv
 
         } else {
 
-            if (!TextUtils.isEmpty(path)) {
+            val options = RequestOptions()
+                    .diskCacheStrategy(DiskCacheStrategy.ALL)
+                    .override(Target.SIZE_ORIGINAL)
+                    .placeholder(R.drawable.shape_image_thumb)
+                    .dontTransform()
 
-                //Uri uri = Uri.parse(albumImageBck.localFilePath);
-                //viewHolder.album_image.setImageURI(uri);
-
-                val file = File(albumImage.localFilePath)
-                /*
-                   Picasso.with(staggeredGalleryActivity)
-                           .load(file)
-                           .into(holder.itemView.album_image, customListener)*/
-
-                val options = RequestOptions()
-                        .diskCacheStrategy(DiskCacheStrategy.ALL)
-                        .override(Target.SIZE_ORIGINAL)
-                        .placeholder(R.drawable.shape_image_thumb)
-                        .dontTransform()
-
+            if (album.isOffline == 1) {
                 //updateBorderSize(holder)
-                Glide.with(staggeredGalleryActivity)
-                        .load(Uri.fromFile(file))
-                        .apply(RequestOptions.diskCacheStrategyOf(DiskCacheStrategy.AUTOMATIC))
+
+                if (!TextUtils.isEmpty(albumImage.localFilePath)) {
+
+                    //Uri uri = Uri.parse(albumImageBck.localFilePath);
+                    //viewHolder.album_image.setImageURI(uri);
+
+                    val file = File(albumImage.localFilePath)
+                    /*
+                       Picasso.with(staggeredGalleryActivity)
+                               .load(file)
+                               .into(holder.itemView.album_image, customListener)*/
+
+                    //updateBorderSize(holder)
+                    Glide.with(staggeredGalleryActivity)
+                            .load(Uri.fromFile(file))
+                            .transition(DrawableTransitionOptions.withCrossFade())
+                            .apply(options)
+                            .listener(customListener)
+                            .into(holder.itemView.album_image)
+                } else {
+                    holder.itemView.album_image!!.setImageResource(R.drawable.nophotos)
+                }
+
+            } else {
+                Glide.with(holder.itemView.album_image)
+                        .load(albumImage.url)
                         .transition(DrawableTransitionOptions.withCrossFade())
                         .apply(options)
                         .listener(customListener)
                         .into(holder.itemView.album_image)
-            } else {
-                holder.itemView.album_image!!.setImageResource(R.drawable.nophotos)
-
-                /*//If image unable to load then set default
-                holder.itemView.rlMain.setBackgroundColor(Color.WHITE)
-                holder.itemView.rlMain.setPadding(0, 0, 0, 0)*/
             }
-
-
-            /*with(albumImages!![position]) {
-
-                with(set) {
-                    val radio = String.format("%d:%d", width, height)
-                    clone(holder.itemView.parentContsraint)
-                    setDimensionRatio(holder.itemView.album_image.id, radio)
-                    applyTo(holder.itemView.parentContsraint)
-                }
-            }*/
         }
-
-
     }
 
     internal inner class CustomListener(var pos: Int, var holder: RecyclerView.ViewHolder) :
@@ -178,8 +160,7 @@ class GalleryAdapter(private val staggeredGalleryActivity: StaggeredGalleryActiv
 
             when (view.id) {
                 R.id.ivShare -> {
-                    val uri = Uri.parse(albumImage.localFilePath)
-                    SharingUtils.shareAlbum(staggeredGalleryActivity, "", uri)
+                    SharingUtils.shareAlbum(staggeredGalleryActivity, "", File(albumImage.localFilePath))
                 }
                 R.id.ivComment -> {
                     staggeredGalleryActivity.commentDialog.show(albumImage.albumId, albumImage.pageId)
@@ -267,8 +248,9 @@ class GalleryAdapter(private val staggeredGalleryActivity: StaggeredGalleryActiv
 
             /* var layoutHeight = resource!!.intrinsicHeight
              Log.e(TAG, "Height: " + albumImages!![pos].height + " = " + layoutHeight)*/
-            setSelectImage(holder, albumImages!![pos])
-
+            if (pos <= albumImages!!.size - 1) {
+                setSelectImage(holder, albumImages!![pos])
+            }
             return false
         }
     }

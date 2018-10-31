@@ -1,7 +1,9 @@
 package com.app.photobook.retro;
 
+import com.app.photobook.model.AlbumActiveRes;
 import com.app.photobook.model.AlbumRes;
 import com.app.photobook.model.AppUpdateRes;
+import com.app.photobook.model.Maintenance;
 import com.app.photobook.model.PhotographerRes;
 import com.app.photobook.model.PortfolioRes;
 import com.app.photobook.model.UserRes;
@@ -93,4 +95,12 @@ public interface RetroApi {
                                   @Field("event_type") String event_type,
                                   @Field("message") String message,
                                   @Field("reference_by") String reference_by);
+
+    @FormUrlEncoded
+    @POST("isEventActive")
+    Call<AlbumActiveRes> checkIsAlbumActive(@Field("pin") String pin);
+
+    @FormUrlEncoded
+    @POST("getMaintenance")
+    Call<Maintenance> getMaintenance(@Field("pin") String pin);
 }

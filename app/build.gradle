@@ -48,8 +48,8 @@ android {
             applicationId 'com.photobook.alivefoto'
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            versionCode 5
-            versionName "1.0"
+            versionCode 8
+            versionName "Alivefoto-1.8"
             vectorDrawables.useSupportLibrary = true
             dimension "color"
             multiDexEnabled true
@@ -59,8 +59,8 @@ android {
             applicationId 'om.multi.vision'
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            versionCode 6
-            versionName "Om Multi Vision-1.5"
+            versionCode 9
+            versionName "Om Multi Vision-1.9"
             vectorDrawables.useSupportLibrary = true
             dimension "color"
             multiDexEnabled true
@@ -70,8 +70,8 @@ android {
             applicationId 'com.studio.sapna'
             minSdkVersion rootProject.ext.minSdkVersion
             targetSdkVersion rootProject.ext.targetSdkVersion
-            versionCode 6
-            versionName "Studio Sapna-1.1"
+            versionCode 8
+            versionName "Studio Sapna-1.8"
             vectorDrawables.useSupportLibrary = true
             dimension "color"
             multiDexEnabled true
@@ -132,7 +132,7 @@ dependencies {
     implementation 'com.jaedongchicken:ytplayer:1.4.4'
     //implementation 'com.github.takusemba:spotlight:1.6.1'
     implementation 'com.github.wooplr:Spotlight:1.2.3'
-    implementation project(':libSpotlight')
+    //implementation project(':libSpotlight')
 }
 
 apply plugin: 'com.google.gms.google-services'

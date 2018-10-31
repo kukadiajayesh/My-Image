@@ -158,6 +158,19 @@
     </style>
 
     <string name="title_dynamic_feature">Module Title</string>
+
     <string name="showcase_add_button">Click on the button to add your private client gallery</string>
-    <string name="showcase_add_button_title">Add Album?</string>
+    <string name="showcase_add_button_title">Add Gallery?</string>
+    <string name="showcase_submit_image_button_title">Want to send your selection?</string>
+    <string name="showcase_submit_image_button_message">Click here to SUBMIT it</string>
+
+    <string name="showcase_image_selection_button_title">ALL or SELECTED?</string>
+    <string name="showcase_image_selection_button_message">Need to view your "ALL " or  "SELECTED" images?</string>
+
+    <string name="text_view_selected">View Selected</string>
+    <string name="text_view_all">View All</string>
+    <string name="dialog_msg_offline">Do you want to use this gallery as offline?</string>
+    <string name="button_add_new_gallery">Add New Gallery</string>
+    <string name="dialog_title_add_gallery">Add Gallery</string>
+
 </resources>

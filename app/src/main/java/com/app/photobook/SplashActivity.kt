@@ -3,11 +3,13 @@ package com.app.photobook
 import android.content.Intent
 import android.os.Bundle
 import android.os.Handler
+import android.support.v7.app.AlertDialog
 import android.support.v7.app.AppCompatActivity
 import android.text.TextUtils
 import android.util.Log
 import android.view.View
 import android.widget.ImageView
+import com.app.photobook.model.Maintenance
 import com.app.photobook.model.PhotographerRes
 import com.app.photobook.retro.RetroApi
 import com.app.photobook.room.RoomDatabaseClass
@@ -88,6 +90,8 @@ class SplashActivity : AppCompatActivity() {
 
     private fun getPhotographerInfo() {
 
+        if (!Utils.isOnline(this)) return
+
         val responseBodyCall = retroApi.getPhotographerDetail("")
         responseBodyCall.enqueue(object : Callback<PhotographerRes> {
             override fun onResponse(call: Call<PhotographerRes>, response: Response<PhotographerRes>) {
@@ -95,6 +99,7 @@ class SplashActivity : AppCompatActivity() {
                 if (response.code() != 200) {
                     val res = response.errorBody().string()
                     Log.e(TAG, "onResponse: $res")
+                    checkMaintenanceMessage()
                     return
                 }
 
@@ -118,19 +123,112 @@ class SplashActivity : AppCompatActivity() {
                                 .fetch()
                     }
 
-                    goForward(true)
+                    checkMaintenanceMessage()
+                    //goForward(true)
+                } else {
+                    checkMaintenanceMessage()
                 }
             }
 
             override fun onFailure(call: Call<PhotographerRes>, throwable: Throwable) {
                 throwable.printStackTrace()
+                checkMaintenanceMessage()
             }
         })
     }
 
-    internal fun goForward(delayed: Boolean) {
+    private fun checkMaintenanceMessage() {
 
-        if (delayed) {
+        if (!Utils.isOnline(this)) {
+            goForward(true)
+            return
+        }
+
+        retroApi.getMaintenance("")
+                .enqueue(object : Callback<Maintenance> {
+                    override fun onResponse(call: Call<Maintenance>?, response: Response<Maintenance>?) {
+
+                        var hasForward = true
+
+                        if (response!!.code() != 200) {
+                            val res = response.errorBody().string()
+                            Log.e(TAG, "onResponse: $res")
+                            goForward(true)
+                            return
+                        }
+
+                        var res = response.body()
+                        if (res.error == 0) {
+                            hasForward = if (res.data.isInMaintenance == 1) {
+                                showMaintenanceDialog(res.data.message)
+                                false
+                            } else {
+                                checkForWillMaintenance(res)
+                            }
+                        }
+
+                        if (hasForward) {
+                            goForward(true)
+                        }
+                    }
+
+                    override fun onFailure(call: Call<Maintenance>?, t: Throwable?) {
+                        t!!.printStackTrace()
+                        goForward(true)
+                    }
+                })
+
+    }
+
+    /**
+     * Show Will Maintenance Dialog
+     */
+    private fun checkForWillMaintenance(res: Maintenance): Boolean {
+        return if (res.data.willMaitenance == 1) {
+            var myPrefManager = MyPrefManager(this@SplashActivity)
+            var maintenanceId = myPrefManager.maintenanceId
+            if (maintenanceId != 0) {
+                if (maintenanceId != res.data.version) {
+                    showWillMaintenanceDialog(myPrefManager, res)
+                    false
+                } else {
+                    true
+                }
+            } else {
+                showWillMaintenanceDialog(myPrefManager, res)
+                false
+            }
+        } else true
+    }
+
+    private fun showWillMaintenanceDialog(myPrefManager: MyPrefManager, res: Maintenance) {
+        AlertDialog.Builder(this)
+                .setMessage(res.data.message)
+                .setCancelable(false)
+                .setPositiveButton("Ok") { dialog, which ->
+                    goForward(true)
+                }
+                .setNegativeButton("Don't show again") { dialog, which ->
+                    myPrefManager.maintenanceId = res.data.version
+                    goForward(true)
+                }
+                .show()
+    }
+
+    private fun showMaintenanceDialog(message: String) {
+
+        AlertDialog.Builder(this)
+                .setMessage(message)
+                .setCancelable(false)
+                .setPositiveButton("Ok") { dialog, which ->
+                    finish()
+                }
+                .show()
+    }
+
+    internal fun goForward(isDirectCall: Boolean) {
+
+        if (isDirectCall) {
             progress.visibility = View.GONE
 
             val intent = if (myPrefManager.isUserLoggedIn) {

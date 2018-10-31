@@ -26,9 +26,11 @@ public class ImageDownloadAndSave extends AsyncTask<String, Void, Boolean> {
     Context context;
     DownloadListener downloadListener;
     Handler handler = new Handler();
+    String folderPath = "";
 
-    public ImageDownloadAndSave(Context context, DownloadListener downloadListener) {
+    public ImageDownloadAndSave(Context context, String folderPath, DownloadListener downloadListener) {
         this.context = context;
+        this.folderPath = folderPath;
         this.downloadListener = downloadListener;
     }
 
@@ -36,10 +38,9 @@ public class ImageDownloadAndSave extends AsyncTask<String, Void, Boolean> {
     protected Boolean doInBackground(String... strings) {
         String url = strings[0]; // url to download
         int pos = Integer.parseInt(strings[1]); // file name to be stored
-        String albumId = strings[2]; // file name to be stored
-        String fileId = strings[3]; // file name to be stored
+        String fileId = strings[2]; // file name to be stored
 
-        downloadImagesToSdCard(url, pos, albumId, fileId);
+        downloadImagesToSdCard(url, pos, fileId);
         return null;
     }
 
@@ -48,18 +49,14 @@ public class ImageDownloadAndSave extends AsyncTask<String, Void, Boolean> {
         super.onPostExecute(value);
     }
 
-    private boolean downloadImagesToSdCard(String downloadUrl, final int pos, String albumId,
-                                           String fileId) {
+    private boolean downloadImagesToSdCard(String downloadUrl, final int pos, String fileId) {
 
         try {
 
             URL url = new URL(downloadUrl);
 
-            /* making a directory in sdcard */
-            String sdCard = FileUtils.getDefaultFolder(context) + albumId;
-
             /*  if specified not exist create new */
-            File myDir = new File(sdCard);
+            File myDir = new File(folderPath);
             if (!myDir.exists()) {
                 myDir.mkdirs();
                 Log.v("", "inside mkdir");

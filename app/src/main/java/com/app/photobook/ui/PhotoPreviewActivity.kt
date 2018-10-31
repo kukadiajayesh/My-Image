@@ -2,7 +2,6 @@ package com.app.photobook.ui
 
 import android.content.Context
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import android.os.Handler
 import android.support.v4.app.Fragment
@@ -26,6 +25,7 @@ import com.app.photobook.tools.Constants
 import com.app.photobook.tools.SharingUtils
 import kotlinx.android.synthetic.main.activity_photopreview.*
 import kotlinx.android.synthetic.main.navigation_toolbar.*
+import java.io.File
 import java.util.*
 
 class PhotoPreviewActivity : AppCompatActivity() {
@@ -104,6 +104,9 @@ class PhotoPreviewActivity : AppCompatActivity() {
             menuSelection.isVisible = false
         }
 
+        if (album.isSharble == 0) {
+            menu.findItem(R.id.action_share).isVisible = false
+        }
 
         return super.onCreateOptionsMenu(menu)
     }
@@ -133,8 +136,8 @@ class PhotoPreviewActivity : AppCompatActivity() {
             R.id.action_share -> {
                 var albumImage = albumImages!![view_pager.currentItem]
 
-                val uri = Uri.parse(albumImage.localFilePath)
-                SharingUtils.shareAlbum(context, "", uri)
+                //val uri = Uri.parse(albumImage.localFilePath)
+                SharingUtils.shareAlbum(context, "", File(albumImage.localFilePath))
             }
         }
         return super.onOptionsItemSelected(item)
@@ -143,7 +146,7 @@ class PhotoPreviewActivity : AppCompatActivity() {
 
     protected fun bindData() {
         //view_pager!!.adapter = statePagerAdapter
-        view_pager!!.adapter = ViewPagerAdapter(view_pager, albumImages!!, viewMode)
+        view_pager!!.adapter = ViewPagerAdapter(view_pager, album, albumImages!!, viewMode)
         view_pager!!.setCurrentItem(current, true)
         view_pager.pageMargin = resources.getDimensionPixelSize(R.dimen.view_pager_margin)
 

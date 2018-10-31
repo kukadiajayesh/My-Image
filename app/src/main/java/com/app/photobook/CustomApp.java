@@ -44,6 +44,7 @@ public class CustomApp extends Application {
                 .addMigrations(MIGRATION_1_2)
                 .addMigrations(MIGRATION_2_3)
                 .addMigrations(MIGRATION_3_4)
+                .addMigrations(MIGRATION_4_5)
                 .build();
     }
 
@@ -71,6 +72,18 @@ public class CustomApp extends Application {
             database.execSQL("ALTER TABLE AlbumImage ADD COLUMN width INTEGER default null");
             database.execSQL("ALTER TABLE AlbumImage ADD COLUMN height INTEGER default null");
             Log.e(TAG, "migrate: 3 -> 4");
+        }
+    };
+
+    Migration MIGRATION_4_5 = new Migration(4, 5) {
+        @Override
+        public void migrate(SupportSQLiteDatabase database) {
+            database.execSQL("ALTER TABLE Album ADD COLUMN isSharble INTEGER default null");
+            database.execSQL("ALTER TABLE Album ADD COLUMN isOffline INTEGER default null");
+            database.execSQL("ALTER TABLE Album ADD COLUMN isActive INTEGER default null");
+            database.execSQL("ALTER TABLE Album ADD COLUMN shareMessage TEXT");
+            database.execSQL("ALTER TABLE Photographer ADD COLUMN youtubeLink TEXT");
+            Log.e(TAG, "migrate: 4 -> 5");
         }
     };
 

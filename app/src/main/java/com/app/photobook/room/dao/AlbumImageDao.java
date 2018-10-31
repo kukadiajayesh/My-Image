@@ -32,8 +32,8 @@ public interface AlbumImageDao {
     @Query("Select * from AlbumImage where albumId = :albumId")
     List<AlbumImage> getAllAlbums(int albumId);
 
-    @Query("Select * from AlbumImage where selected = :value")
-    List<AlbumImage> getAllSelectedImages(boolean value);
+    @Query("Select * from AlbumImage where albumId = :albumId and selected = :value")
+    List<AlbumImage> getAllSelectedAlbumImages(int albumId, boolean value);
 
     @Update
     void update(AlbumImage photoAlbum);

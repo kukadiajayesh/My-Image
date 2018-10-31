@@ -336,6 +336,35 @@
                     android:background="@color/icon_gray_light" />
 
                 <LinearLayout
+                    android:id="@+id/llYoutube"
+                    style="@style/photographer_icon_linear"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        style="@style/photographer_icon"
+                        app:srcCompat="@drawable/ic_svg_youtube_black" />
+
+                    <TextView
+                        android:id="@+id/tvSocialYoutube"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="30dp"
+                        android:layout_marginLeft="30dp"
+                        android:textColor="@color/bottomTextColor"
+                        android:textSize="@dimen/textsize_1" />
+
+                </LinearLayout>
+
+                <View
+                    android:id="@+id/viewYoutube"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/icon_gray_light" />
+
+                <LinearLayout
                     android:id="@+id/llLocation"
                     style="@style/photographer_icon_linear"
                     android:layout_width="match_parent"

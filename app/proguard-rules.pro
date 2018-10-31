@@ -84,6 +84,11 @@
     public static ** valueOf(java.lang.String);
 }
 
+#com.github.wooplr:Spotlight:1.2.3
+-keep class com.wooplr.spotlight.** { *; }
+-keep interface com.wooplr.spotlight.**
+-keep enum com.wooplr.spotlight.**
+
 #Custom
 -keep class com.photobook.glimpse.model.** { *; }
 -keep class com.photobook.model.** { *; }
