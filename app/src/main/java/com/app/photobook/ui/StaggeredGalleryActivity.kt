@@ -21,6 +21,7 @@ import android.widget.LinearLayout
 import android.widget.Toast
 import com.app.photobook.CustomApp
 import com.app.photobook.R
+import com.app.photobook.R.id.toolbar
 import com.app.photobook.adapter.GalleryAdapter
 import com.app.photobook.dialog.CommentDialog
 import com.app.photobook.helper.PhotoSelectionUtils
@@ -290,7 +291,10 @@ class StaggeredGalleryActivity : AppCompatActivity() {
 
     fun promptSubmit(ids: String) {
         val builder1 = AlertDialog.Builder(this@StaggeredGalleryActivity)
-        builder1.setMessage("Are you sure want to submit the selection?")
+        builder1.setTitle("Are you ready to submit?")
+        builder1.setMessage("If it is OK to proceed, click the Submit button. \n\n" +
+                "Once you submit, you will no longer be able to change your selection and your current choice will be sent to photographer. \n\n" +
+                "Note you don't have to submit until you are happy with your choice. Your work so far is saved and you can always come back another day to finish later!")
         builder1.setCancelable(false)
         builder1.setPositiveButton(
                 "Submit") { dialog, id ->
